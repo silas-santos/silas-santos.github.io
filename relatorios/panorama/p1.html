@@ -1,0 +1,386 @@
+<!doctype html><html lang='pt-BR'><head><title>Panorama das Internações SUS RS · Painel</title></head><body><meta charset='utf-8'>
+<style>
+html,body{margin:0;padding:0;overflow:hidden;background:#0A1020;font-family:'Segoe UI',system-ui,sans-serif;color:#EEF3FC}
+#st{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;background:radial-gradient(ellipse at 35% 30%,#14213B 0%,#0A1020 70%);
+  color:#EEF3FC;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;line-height:1.3}
+/* o HTML Content não aplica o estilo do body: cor, fonte e altura de linha ficam presas no #st (os filhos herdam) */
+.ab{position:absolute}
+.h1{left:40px;top:20px;font-size:26px;font-weight:700;letter-spacing:.5px}
+.h1 b{color:#29D3F0}
+.h2{left:40px;top:56px;font-size:13.5px;color:#8C9AB5}
+.fo{right:40px;top:24px;text-align:right;font-size:11px;letter-spacing:1.6px;color:#5F6E8A;line-height:1.7}
+.fo b{color:#C9D3E6;letter-spacing:.3px;font-size:12.5px}
+#meses{left:40px;top:90px;width:1200px;display:flex;gap:5px;align-items:center}
+.ano{font-size:10px;color:#5F6E8A;letter-spacing:1.5px;margin:0 4px 0 2px}
+.pl{flex:1;text-align:center;padding:5px 0;border-radius:13px;font-size:12px;color:#8C9AB5;background:#111A2C;border:1px solid #1E2A42;cursor:pointer;transition:all .25s}
+.pl:hover{border-color:#3B5A86;color:#EEF3FC}
+.pl.on{background:#29D3F0;color:#0A1020;font-weight:700;border-color:#29D3F0;box-shadow:0 0 14px rgba(41,211,240,.45)}
+.pl.inv{background:linear-gradient(#111A2C,#111A2C) padding-box,linear-gradient(90deg,#1E2A42,#2E4A6E) border-box}
+#kpis{left:40px;top:134px;width:1200px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.k{background:#111A2C;border:1px solid #22304A;border-radius:10px;padding:11px 14px 8px;height:84px;position:relative;overflow:hidden}
+.kl{font-size:10.5px;letter-spacing:1.8px;color:#7C8BA6;font-weight:600;line-height:1.3}
+.kv{font-size:25px;font-weight:700;margin-top:3px;white-space:nowrap;color:#EEF3FC;line-height:1.15}
+.kv small{font-size:13px;color:#8C9AB5;font-weight:600;margin-left:3px}
+.kd{font-size:11px;font-weight:700;margin-top:2px;line-height:1.3}
+.kd span{color:#5F6E8A;font-weight:400}
+.k svg{position:absolute;right:10px;bottom:9px}
+.pos{color:#4FD8A8}.neg{color:#FF8A8A}.neu{color:#8C9AB5}
+.pn{background:#111A2C;border:1px solid #22304A;border-radius:10px}
+.pt{font-size:11.5px;letter-spacing:2.4px;color:#8C9AB5;font-weight:700}
+.ps{font-size:11.5px;color:#5F6E8A;letter-spacing:0;font-weight:400;margin-left:8px}
+#hm{left:40px;top:244px;width:820px;height:456px}
+#hmg{position:absolute;left:16px;top:44px}
+.hr{display:flex;align-items:center;height:33px;cursor:pointer;border-radius:6px;transition:background .2s}
+.hr:hover{background:#16223A}
+.hn{width:196px;font-size:12.5px;color:#C9D3E6;display:flex;align-items:center;gap:8px;white-space:nowrap;overflow:hidden}
+.hn i{width:8px;height:8px;border-radius:50%;flex:none}
+.hn em{font-style:normal;color:#5F6E8A;font-size:10.5px;margin-left:auto;padding-right:8px}
+.hc{width:28px;height:25px;margin-right:3px;border-radius:4px;transition:transform .15s,opacity .5s;opacity:0}
+.hc.vis{opacity:1}
+.hc:hover{transform:scale(1.18);outline:1.5px solid #EEF3FC;z-index:2}
+.hcol{position:absolute;top:30px;width:30px;border:1.5px solid #29D3F0;border-radius:6px;pointer-events:none;transition:left .35s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 12px rgba(41,211,240,.35)}
+.hx{display:flex;margin-left:196px;font-size:9.5px;color:#5F6E8A;height:16px}
+.hx div{width:28px;margin-right:3px;text-align:center}
+.hleg{position:absolute;right:18px;top:16px;font-size:10.5px;color:#5F6E8A;display:flex;align-items:center;gap:6px}
+.hleg b{display:inline-block;width:90px;height:8px;border-radius:4px;background:linear-gradient(90deg,#16223A,#1F5F86,#29D3F0,#E8FBFF)}
+#dir{left:876px;top:244px;width:364px;height:456px}
+.mr{display:flex;align-items:center;height:30px;font-size:12.5px;color:#C9D3E6;position:relative}
+.mr .nm{width:118px}
+.mr .tk{flex:1;height:9px;background:#1C263B;border-radius:5px;overflow:hidden;margin-right:10px}
+.mr .br{height:100%;background:linear-gradient(90deg,#1E7FA8,#29D3F0);border-radius:5px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.mr .vl{width:58px;text-align:right;font-weight:700;color:#EEF3FC}
+.mr:hover .br{background:linear-gradient(90deg,#F4E06D,#FFB74D)}
+#car{display:flex;height:16px;border-radius:8px;overflow:hidden;margin-top:10px}
+#car div{transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.cl{display:flex;gap:14px;font-size:11px;color:#8C9AB5;margin-top:8px}
+.cl i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+.frase{font-size:13px;color:#C9D3E6;margin-top:10px;line-height:1.4}
+.frase b{color:#29D3F0;font-size:15px}
+#gav{left:876px;top:244px;width:364px;height:456px;background:#14213A;border:1px solid #2C4F6B;border-radius:10px;transform:translateX(420px);transition:transform .5s cubic-bezier(.2,.8,.2,1);box-shadow:-18px 0 40px rgba(0,0,0,.45);overflow:hidden}
+#gav.on{transform:translateX(0)}
+#gav .x{position:absolute;right:12px;top:10px;width:26px;height:26px;border-radius:13px;background:#1C263B;text-align:center;line-height:25px;cursor:pointer;color:#8C9AB5;font-size:15px}
+#gav .x:hover{background:#29D3F0;color:#0A1020}
+.gt{font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px;color:#EEF3FC}
+.gt i{width:11px;height:11px;border-radius:50%}
+.gg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.gc{background:#111A2C;border-radius:8px;padding:8px 10px}
+.gc .kl{font-size:9.5px}
+.gc .kv{font-size:19px}
+.nota{font-size:11.5px;color:#8C9AB5;margin-top:6px;line-height:1.45}
+.nota b{color:#EEF3FC}
+#tip{position:absolute;pointer-events:none;background:#0D1528;border:1px solid #2C4F6B;border-radius:8px;padding:8px 11px;font-size:12px;line-height:1.5;opacity:0;transition:opacity .15s;z-index:9;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#tip b{font-size:14px}
+.rod{left:40px;bottom:6px;font-size:10px;color:#3E4C68;letter-spacing:1px}
+/* ---- movimento contínuo ---- */
+.h1 b{animation:glow 3.2s ease-in-out infinite}
+@keyframes glow{50%{text-shadow:0 0 14px rgba(41,211,240,.85)}}
+.vivo{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4FD8A8;margin-right:7px;position:relative;top:-1px;box-shadow:0 0 0 0 rgba(79,216,168,.7);animation:vivo 2s ease-out infinite}
+@keyframes vivo{70%{box-shadow:0 0 0 9px rgba(79,216,168,0)}100%{box-shadow:0 0 0 0 rgba(79,216,168,0)}}
+.hc.vis{animation:onda 6s ease-in-out infinite}
+@keyframes onda{0%,82%,100%{filter:brightness(1)}88%{filter:brightness(1.55) saturate(1.2)}}
+.hcol{animation:resp 2.4s ease-in-out infinite}
+@keyframes resp{50%{box-shadow:0 0 22px rgba(41,211,240,.7);border-color:#8DEBFF}}
+.hcol:after{content:'';position:absolute;left:0;right:0;height:60px;top:-60px;background:linear-gradient(transparent,rgba(255,255,255,.35),transparent);animation:luz 3.5s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes luz{0%{top:-60px}60%,100%{top:100%}}
+.hcol{overflow:hidden}
+.pul{animation:pul 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pul{0%{transform:scale(.5);opacity:.6}100%{transform:scale(2.2);opacity:0}}
+.mr .br{position:relative;overflow:hidden}
+.mr .br:after{content:'';position:absolute;top:0;bottom:0;width:40px;left:-40px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:brilho 4.5s ease-in-out infinite}
+@keyframes brilho{0%{left:-40px}35%,100%{left:110%}}
+#car div{background-image:linear-gradient(45deg,rgba(255,255,255,.12) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.12) 50%,rgba(255,255,255,.12) 75%,transparent 75%)!important;background-size:16px 16px;animation:listra 1.6s linear infinite}
+@keyframes listra{to{background-position:16px 0}}
+#ctl{position:absolute;right:40px;top:90px;display:flex;align-items:center;gap:6px;user-select:none}
+#pw{position:relative;width:28px;height:28px}
+#play{position:absolute;left:1px;top:1px;width:26px;height:26px;border-radius:13px;border:1px solid #2C4F6B;background:#111A2C;color:#29D3F0;font-size:11px;text-align:center;line-height:25px;cursor:pointer;box-sizing:border-box}
+#play:hover{background:#29D3F0;color:#0A1020}
+#play.on{background:#29D3F0;color:#0A1020;animation:resp 2.4s ease-in-out infinite}
+.anel{position:absolute;left:-3px;top:-3px;pointer-events:none;transform:rotate(-90deg)}
+.anel circle{fill:none;stroke:#8DEBFF;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:94.2;stroke-dashoffset:94.2}
+.anel.on circle{animation:cont var(--t,5s) linear infinite}
+@keyframes cont{from{stroke-dashoffset:94.2}to{stroke-dashoffset:0}}
+.stp{width:22px;height:22px;border-radius:11px;border:1px solid #2C4F6B;background:#111A2C;color:#8C9AB5;text-align:center;line-height:20px;cursor:pointer;font-size:14px;box-sizing:border-box}
+.stp:hover{background:#29D3F0;color:#0A1020}
+.stp.off{opacity:.3;pointer-events:none}
+#tempo{min-width:44px;text-align:center;font-size:12px;color:#C9D3E6;font-weight:600;line-height:1.1}
+#tempo small{display:block;font-size:8.5px;color:#5F6E8A;letter-spacing:1px;font-weight:400}
+#meses{left:186px;width:904px}
+#anos{left:40px;top:90px;display:flex;gap:5px}
+.yr{padding:5px 12px;border-radius:13px;font-size:12px;font-weight:700;letter-spacing:.5px;color:#5F6E8A;background:#0E1626;border:1px dashed #2A3A58;cursor:pointer;transition:all .25s}
+.yr:hover{color:#EEF3FC;border-color:#3B5A86}
+.yr.on{color:#29D3F0;border:1px solid #29D3F0;background:#0F2236}
+.hx div{font-size:10.5px}
+</style>
+<div id='st'>
+  <div class='ab h1'>PANORAMA DAS INTERNAÇÕES <b>SUS</b> · RIO GRANDE DO SUL</div>
+  <div class='ab h2'>Internações pagas pelo SUS por motivo (CID-10), macrorregião e caráter — escolha o mês, passe o mouse e clique num motivo</div>
+  <div class='ab fo' id='fonte'></div>
+  <div class='ab' id='meses'></div>
+  <div class='ab' id='kpis'></div>
+  <div class='ab pn' id='hm'>
+    <div class='ab pt' style='left:18px;top:16px'>MOTIVO DA INTERNAÇÃO × MÊS<span class='ps'>cor = intensidade dentro de cada motivo</span></div>
+    <div class='hleg'>menor<b></b>maior</div>
+    <div id='hmg'></div>
+  </div>
+  <div class='ab pn' id='dir'>
+    <div style='padding:16px 18px'>
+      <div class='pt'>MACRORREGIÕES DE SAÚDE<span class='ps' id='dirm'></span></div>
+      <div id='mac' style='margin-top:10px'></div>
+      <div class='pt' style='margin-top:18px'>CARÁTER DA INTERNAÇÃO</div>
+      <div id='car'></div>
+      <div class='cl' id='carl'></div>
+      <div class='frase' id='frase'></div>
+    </div>
+  </div>
+  <div class='ab' id='gav'><div style='padding:16px 18px' id='gavc'></div><div class='x' id='gx'>×</div></div>
+  <div class='ab rod'>FONTE: DATASUS · SIH/SUS · MORBIDADE HOSPITALAR POR LOCAL DE INTERNAÇÃO · DADOS PÚBLICOS E AGREGADOS</div>
+  <div id='tip'></div>
+</div>
+<script>
+var D = {"meses":["2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07"],"cap":[{"cod":"I.","nome":"Infecciosas e parasitárias","cor":"#FF9F6B","i":[4430,4281,4574,4884,4865,4274,4112,4051,4357,4300,4416,4419,4683,4648,4707,4268,4340,4309,3891],"v":[10329786.9,9713042.18,9409030.48,10910111.01,10180159.04,9836111.74,9477523.1,9758096.52,10986101.64,9194359.26,9850679.89,9631855.2,10653444.98,10364952.41,10105503.23,9079841.28,9574017.75,10133311.38,8934808.93],"d":[43551,41580,42237,46258,45574,42220,40822,40075,45885,40822,41698,41194,43534,44583,44978,40682,42509,41886,38157],"o":[735,731,747,769,790,857,872,839,852,688,722,737,801,755,702,690,798,876,765]},{"cod":"II.","nome":"Neoplasias","cor":"#4DD9A6","i":[6284,6156,6326,6531,6780,6442,6792,6588,6960,7269,6732,6843,6222,6018,6845,7146,6885,6668,7315],"v":[15270958.53,15691134.95,16292183.57,17284016.16,19126725.74,17967468.61,19469700.69,19279503.35,21315876.96,22045700.76,19918019.61,20883241.13,17926780.8,17099101.28,21234101.51,20961682.43,23089745.71,22646811.78,26625511.14],"d":[33296,32141,33612,34365,36910,32055,34582,32601,34194,35258,32412,34005,32347,30087,34574,35462,33360,32774,33117],"o":[563,566,567,562,595,460,536,509,527,549,524,495,551,517,517,558,518,511,507]},{"cod":"III.","nome":"Sangue e imunidade","cor":"#7C8BA6","i":[630,638,676,653,632,593,583,617,648,638,661,734,704,686,692,657,571,649,632],"v":[668481.63,764947.84,557781.06,543852.37,863920.53,526678.97,506776.65,663506.15,517642.36,587129.07,517300.52,581941.69,732028.68,807807.49,579680.01,628548.77,468502.53,765698.94,527449.54],"d":[3959,4056,4246,4062,4222,3945,3784,3881,4137,4259,3786,4382,4166,4089,4702,4249,3747,4006,3967],"o":[38,39,41,33,32,45,53,50,43,34,40,52,36,39,49,32,36,36,38]},{"cod":"IV.","nome":"Endócrinas e metabólicas","cor":"#7C8BA6","i":[1100,1143,1214,1182,1149,1083,1182,1187,1176,1274,1223,1149,1237,1173,1258,1206,1194,1189,1142],"v":[1383113.58,1462354.97,1548048.04,1817018.36,1673432.32,1456144.01,1757111.82,1872853.19,1718424.17,1612969.72,2009275.77,1932638.41,1812904.8,1808532.92,1893883.85,1846277.87,2059234.54,2155519.13,2007249.86],"d":[7381,7394,8127,8348,7745,6797,7785,8045,7927,8300,7612,7361,8041,7175,8136,7651,7721,7778,7482],"o":[53,59,78,78,78,73,84,64,70,61,51,58,70,49,67,60,56,67,76]},{"cod":"IX.","nome":"Aparelho circulatório","cor":"#FF6B81","i":[7882,7472,7801,7891,8034,7964,8362,8576,8949,8816,8630,8460,7999,7917,8198,8161,8311,8443,8839],"v":[32588591.29,32625631.76,31385655.2,33262111.7,32609406.17,33096885.38,34619380.25,35993516.57,37505422.46,36610007.28,37186736.64,37990537.47,33162355.12,34951701.18,37295142.23,37300064.35,38446808.1,39686228.84,39391687.44],"d":[52487,50267,49375,52033,53584,51278,53827,55753,60525,59568,57386,55529,53009,51928,55362,51975,50086,53386,56726],"o":[545,482,542,587,588,688,735,680,706,635,574,598,537,503,523,502,568,581,644]},{"cod":"V.","nome":"Transtornos mentais","cor":"#E86BD6","i":[3387,3481,3603,3539,3539,3233,3495,3639,3726,3831,3498,3601,3584,3490,3800,3722,3475,3512,3375],"v":[3109251.84,3122653.15,3186449.58,3306355.41,3204895.63,2956402.43,3226768.58,3351383.92,3267607.53,3306314.65,2958155.76,3203998.99,2933586.63,3065717.63,3396461.92,3360961.26,3210691.84,3283366.6,3053957.4],"d":[58451,58646,60844,62108,61844,56724,61835,63399,63912,63863,57742,61062,59442,57435,64577,63074,61001,62122,58272],"o":[14,9,7,8,12,21,18,15,18,10,8,16,12,13,14,20,19,17,17]},{"cod":"VI.","nome":"Sistema nervoso","cor":"#7C8BA6","i":[1369,1436,1443,1457,1478,1481,1504,1491,1549,1591,1564,1510,1505,1413,1565,1584,1530,1566,1638],"v":[1906114.95,2368352.94,1963245.11,2389065.36,2190908.4,2385317.19,2186274.84,2315921.69,2177106.08,2364381.31,2210271.92,2461075.96,2405146.38,2422791.24,2513568.31,2405206.42,2420674.96,2851720.03,2823537.42],"d":[7315,7999,7805,8346,7940,8658,8354,7895,8041,8063,8072,7506,8058,7395,7991,7555,7428,8273,8136],"o":[36,49,32,62,46,60,58,51,49,47,42,47,47,51,40,40,45,60,48]},{"cod":"VII.","nome":"Olho e anexos","cor":"#7C8BA6","i":[676,619,602,433,580,471,691,605,569,604,645,586,473,532,604,629,652,674,742],"v":[2143623.24,1669585.26,2125126.33,1263259.4,1430347.81,1002963.91,1994791.79,1840918.85,1943338.05,2429942.21,2554542.49,2430903.44,1972155.05,2296899.25,2283892.36,2653047.08,2829395.15,3297984.71,3855787.9],"d":[489,317,521,304,238,253,378,290,187,229,344,249,262,290,226,188,246,279,289],"o":[0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0]},{"cod":"VIII.","nome":"Ouvido","cor":"#7C8BA6","i":[203,158,193,172,194,178,172,167,230,231,239,224,229,167,207,212,208,185,198],"v":[213831.81,435929.12,114932.58,353855,263795.61,358351.5,249397.11,269144.73,346306.16,535790.52,602858.07,271995.28,345617.14,255775.48,413094.35,321666.45,429438.85,292988.92,292737.51],"d":[641,409,695,631,663,569,480,556,617,680,694,442,736,508,559,562,467,462,448],"o":[1,0,0,0,0,0,1,0,0,0,0,1,1,0,1,0,0,0,0]},{"cod":"X.","nome":"Aparelho respiratório","cor":"#4FC3F7","i":[6081,5157,5505,6243,8645,10761,11444,10023,9192,8607,7664,6743,5767,4848,5660,6112,7383,8560,8744],"v":[10377790.22,9196931.93,8967854.67,10192046.27,13192996.66,14800847.95,16616647.26,15399225.72,14130859.26,13585950.52,11667302.41,10490493.62,10070459.05,8186557.14,9440212.08,10199940.27,10794348.29,11946953.71,11841688.62],"d":[40821,34958,34556,40181,54019,67848,75047,66593,60298,55276,48170,41298,38930,31372,35028,37571,43917,51585,52874],"o":[736,635,669,769,869,1151,1202,1056,944,774,753,690,653,623,641,757,825,861,858]},{"cod":"XI.","nome":"Aparelho digestivo","cor":"#FFB74D","i":[7710,7901,8079,8182,8557,7649,8066,8539,8495,8801,8573,8098,8252,8197,8791,8618,8202,8734,8986],"v":[10064795.44,9996569.07,9911143.23,10313469.94,12940583.67,10011312.29,10297901.54,11207458.81,11717541.41,11709683.94,12064543.8,11352038.13,11437548.51,11195395.92,12384333.31,11534360.91,11593039.57,12301969.91,13877246.2],"d":[32318,31828,31822,32843,36554,30802,29410,32646,31823,33220,33714,32087,32424,31052,34259,33168,31451,33155,33030],"o":[210,217,233,229,261,250,270,256,273,257,233,230,230,216,232,213,230,280,250]},{"cod":"XII.","nome":"Pele","cor":"#7C8BA6","i":[1544,1750,1637,1621,1534,1423,1472,1543,1527,1478,1497,1409,1457,1424,1708,1566,1500,1573,1526],"v":[940651.2,1035956.13,1047778.49,1030261.63,1011095.35,1027539.3,1032160.14,1005482.35,1006946.34,951574.65,949035.69,985486.66,1036123.64,916157.82,1096025.16,1003629.1,1043306.1,1162251.74,1036489.08],"d":[7153,7665,8166,7537,8008,7137,7168,6861,7101,7279,7281,7025,7915,7404,8565,7256,7811,7053,6628],"o":[37,22,32,21,47,29,33,52,40,42,34,40,42,21,26,37,34,31,17]},{"cod":"XIII.","nome":"Osteomuscular","cor":"#9CCC65","i":[1676,1790,1732,1710,1864,1831,1906,2013,1949,2415,2978,2771,2564,2647,2695,2713,2380,2449,2680],"v":[4162279.92,5118380.76,5586721.23,5734682.52,6903658.29,6666621.12,6913576.94,7856975.3,6936181.68,8805509.09,12018663.55,10671593.76,10238201.83,10765566.42,10938628.97,11117127.49,9928398.49,9673879.63,11588841.31],"d":[6399,6601,6335,6457,7185,7416,7563,7310,6876,7945,8417,7725,7989,7631,8309,7677,7716,7464,7678],"o":[15,9,7,7,16,16,12,14,8,20,15,13,19,13,21,13,16,8,17]},{"cod":"XIV.","nome":"Geniturinário","cor":"#7FA7FF","i":[4992,5245,5321,5435,5353,5023,5113,5189,5301,5514,5373,5374,5452,5399,5754,5590,5405,5464,5658],"v":[6856723.14,6568293.22,5632118.7,6972293.95,7198757.46,6361125.19,6715125.49,6227475.93,7311588.39,7351628.01,7242071.88,7648678.72,7467845.62,8108491.38,6984379.42,7750754.66,7193229.27,7233105.58,7234052.49],"d":[24607,25004,25117,25859,25928,23407,24304,23608,24330,25741,24893,24325,25980,25252,25821,25572,25641,25152,24355],"o":[193,225,205,235,207,209,205,233,213,215,199,175,212,195,183,210,188,210,244]},{"cod":"XIX.","nome":"Lesões e causas externas","cor":"#F4E06D","i":[6671,6912,7160,7088,6911,6461,6864,6770,7084,7141,7110,6801,7036,6874,7299,7129,6964,6752,6814],"v":[11055002.58,11831323.56,13091093.27,12494777.27,12789780.83,12800799.87,13323326.67,13125371.2,12877477.75,13121044.49,13477038.39,13100823.69,13801654.47,12850879.34,15075659.39,13449717.34,13169065.28,14009923.22,14112099.62],"d":[32575,36146,35192,33474,35338,32952,34904,33669,32491,33121,31888,29420,31800,31706,35038,32584,32560,32964,32420],"o":[145,160,145,130,157,129,153,148,157,153,135,130,158,132,148,148,154,150,113]},{"cod":"XV.","nome":"Gravidez e parto","cor":"#BA8CFF","i":[7788,7537,8159,8371,8161,7904,8122,8261,8656,8091,7787,7214,7894,7923,8723,8198,8183,7927,7766],"v":[4887496.96,4670757.99,5056888.94,5311945.9,5154239.61,4921123.08,5128299.96,5149485.04,5465489.33,5049411.51,4924675.09,4426123.69,4852662.3,4953020.07,5608668.44,5186039.8,5238205.36,5050143.28,4879760.69],"d":[21423,20860,22679,23652,23633,22325,23536,24200,24470,23042,22073,20928,21621,22236,25209,23404,23387,22816,22003],"o":[2,2,0,4,1,1,1,0,2,3,1,1,5,2,1,2,3,2,2]},{"cod":"XVI.","nome":"Perinatal","cor":"#7C8BA6","i":[1060,1137,1215,1295,1317,1163,1215,1327,1199,1221,1146,1222,1240,1222,1343,1230,1256,1268,1213],"v":[5055328.52,6037211.87,5971061.93,6059027.8,5927148.47,4830413.9,4786387.67,5953110.28,6508208.04,6631748.85,6187170.37,6957812.37,6520598.79,7090221.93,7251648.87,6200897.46,6547956.96,6928782.15,6340608.15],"d":[11402,13017,13566,13216,13674,11537,11274,13394,12315,12392,11616,12573,12090,12842,13871,11931,12310,13011,11924],"o":[40,32,30,42,40,25,35,35,37,33,28,53,25,42,46,36,35,27,29]},{"cod":"XVII.","nome":"Malformações congênitas","cor":"#7C8BA6","i":[366,378,364,403,412,404,399,423,441,478,520,404,408,386,450,471,441,467,484],"v":[1668387.32,1341823.68,1903398.51,1608921.14,2187358.56,1841374.36,1758847.06,1740546.54,2754334.97,2408810.77,2417926.06,2021019.31,1778161.92,1871352.44,2334253.57,2565090.26,2928729.4,2854062.79,3169209.69],"d":[1543,1679,1793,1876,2037,1633,1706,1694,1893,1815,2366,1744,1620,1728,1990,2043,1923,1885,2207],"o":[4,7,8,16,4,10,10,14,12,12,10,9,8,8,17,15,13,12,10]},{"cod":"XVIII.","nome":"Sintomas e achados anormais","cor":"#7C8BA6","i":[1154,1021,1192,1156,1125,1165,1228,1112,1207,1278,1233,1161,1246,1222,1376,1358,1388,1451,1396],"v":[1732818.7,1526674.98,1792248.81,1758459.38,1638842.75,1610273.55,2094259.53,1823537.17,2105507.51,2111069.09,1886311.61,1773371.51,2115425.28,1910298.1,2707230.06,2912772.98,2838257.95,3517283.56,3577890.99],"d":[6330,5696,6131,6496,6399,6059,6617,6229,6393,6176,5996,6324,6894,6051,6861,6540,5692,6718,5615],"o":[77,75,73,80,85,83,104,102,92,84,81,83,90,61,92,74,81,105,79]},{"cod":"XXI.","nome":"Contatos com serviços de saúde","cor":"#7C8BA6","i":[1617,1621,1693,1825,1820,1753,1928,1791,1959,1897,1969,1782,1819,1698,1972,1923,1782,1991,2039],"v":[1429283.7,1364134.53,1225618.09,1534773.63,1707465.8,1349178.8,1520181.84,1517286.8,1594483.11,1771112.85,1669293.59,1303707.9,1295876.45,1636651.91,1752458.51,1808598.62,1636234.08,2065251.29,1815882.78],"d":[2660,2767,2766,2907,2637,2614,2749,2795,2991,3054,2887,2423,2685,2682,3313,3114,2597,2877,3230],"o":[10,6,5,7,7,17,16,19,11,17,16,14,12,17,21,9,12,15,28]}],"macro":[{"nome":"Centro-Oeste","i":[6224,5846,6200,6296,6369,6219,7043,7020,6907,6965,7069,6844,6695,6435,6790,6792,7022,6976,7281],"v":[9640317.29,8865629.04,8938205.44,10006391.18,10127041.64,8932993.71,10934188.56,11240147.41,11157387.26,11106805.36,12560783.59,11695397.27,11089825.09,10516263.7,11729840.59,11152103.1,11933886.6,13273879.64,13111060.33]},{"nome":"Metropolitana","i":[28501,29167,29790,31062,32056,30575,32181,31197,33040,32527,31753,29763,30205,28905,32997,31731,30740,31595,32432],"v":[60359238.14,63943779.01,62138897.74,67837423.52,70964023.36,65579719.1,68223237.84,68084459.21,74601373.3,73573814.82,71313971.71,71030350.67,69300441.11,69477978.95,77993495.91,76716830.9,73825603.55,76529720.57,81179589.73]},{"nome":"Missioneira","i":[5947,6090,5833,5847,6054,6744,6301,6789,6540,6681,6774,6217,5952,5839,6291,6090,6511,6651,6557],"v":[11025441.03,9610360.24,9170011.43,9197368.43,9785463.19,10828936.11,10796838.39,11631125.91,11623182.88,12536989.59,13112568.63,12050313.92,10413840.64,9803513.68,10693276.14,10600689.93,11765677.22,12776173.64,12536954.89]},{"nome":"Norte","i":[9610,9067,9817,9911,10259,10125,11080,10760,10508,10747,10389,10521,9991,9836,10142,10273,9920,10883,10750],"v":[15958112.13,16258042.6,17063739.54,17880660.5,19916197.38,19612812.26,20312129.29,20953847.29,20322148.63,20755727.9,20651764.68,21105377.68,20301342.21,19915701.69,20845578.44,20913269.54,21848513.59,23998277.07,23380845.52]},{"nome":"Serra","i":[6195,5878,5996,6137,6432,6128,6476,6257,6663,6545,6163,5831,6237,6116,6042,6312,6429,6101,6215],"v":[11758103.09,10567272.83,11130589.41,10975813.17,11826025.73,11416047.5,11843596.73,12941976.13,13694427.69,12163747.69,12693865.01,12012784.83,11781131.92,12467195.04,12193301.09,12248438.46,12765114.56,12774124.8,12762502.52]},{"nome":"Sul","i":[4741,4674,5339,5116,5737,5398,5466,5625,5487,5333,4914,5115,4855,4875,5331,5148,5288,5104,5634],"v":[8820054.1,8812321.08,9621103.57,9286130.26,9826680.56,9444747.99,9980607.92,10112691.38,9901959.29,9719297.11,9250114.6,9943163.51,9160827.1,9441905.35,10962685.79,9893271.56,10437472.24,10168765.27,10810114.69]},{"nome":"Vales","i":[5402,5111,5514,5702,6044,6067,6103,6267,6029,6677,6396,6215,5836,5878,6054,6147,6140,6521,6210],"v":[8283045.69,8484285.09,8705830.69,8956517.14,9750750.11,9991676.48,11583840.2,11388570.21,10885964.15,12327756.08,12728804.89,12282255.85,10511169.37,10935312.94,10870647.59,10761621.31,12863012.42,12336296.2,13205941.95]}],"car":[{"nome":"Urgência","i":[47923,46276,48971,49864,52051,51517,52807,51967,51156,52756,49434,47929,49728,48033,51135,49425,49185,50270,49175]},{"nome":"Eletivo","i":[18538,19454,19408,20097,20790,19638,21776,21780,23930,22618,23887,22481,19956,19774,22430,22960,22779,23454,25830]},{"nome":"Acidentes e lesões","i":[159,103,110,110,110,101,67,168,88,101,137,96,87,77,82,108,86,107,74]}]};
+(function () {
+  var MA = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  var MN = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var n = D.meses.length, sel = n - 1, mot = -1;
+  // O HTML Content pode rodar este script de novo ao redesenhar o visual. Cada execução:
+  // usa só o painel mais novo (#st), apaga os antigos e para o relógio da execução anterior.
+  var todos = document.querySelectorAll('#st'), st = todos[todos.length - 1];
+  var reexecucao = todos.length > 1 || !!window.painel;
+  for (var q = 0; q < todos.length - 1; q++) todos[q].parentNode.removeChild(todos[q]);
+  if (window.__raioXpara) window.__raioXpara();   // versões que ainda se chamavam Raio-X
+  if (window.__painelPara) window.__painelPara();
+  if (reexecucao) {   // só quando já rodou antes: desliga relógios de versões antigas, que não sabiam se registrar
+    var ultimo = setTimeout(function () {}, 0);
+    for (var x = 0; x <= ultimo; x++) clearInterval(x);
+  }
+  var $ = function (id) { return id === 'st' ? st : st.querySelector('#' + id); };
+  function escala() { var s = Math.min(innerWidth / 1280, innerHeight / 720); st.style.transform = 'scale(' + s + ')'; st.style.left = ((innerWidth - 1280 * s) / 2) + 'px'; st.style.top = ((innerHeight - 720 * s) / 2) + 'px'; }
+  escala(); addEventListener('resize', escala);
+  var f0 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
+  var f1 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var f2 = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function rot(i) { var p = D.meses[i].split('-'); return MA[+p[1] - 1] + '/' + p[0].slice(2); }
+  function mi(v) { return v >= 1e6 ? 'R$ ' + f1.format(v / 1e6) + ' mi' : 'R$ ' + f0.format(v / 1e3) + ' mil'; }
+  function soma(arr, k, i) { var s = 0; arr.forEach(function (c) { s += c[k][i]; }); return s; }
+  var T = { i: [], v: [], d: [], o: [] };
+  for (var i = 0; i < n; i++) ['i', 'v', 'd', 'o'].forEach(function (k) { T[k].push(soma(D.cap, k, i)); });
+  function met(c, i) { return { int: c.i[i], val: c.v[i], med: c.v[i] / c.i[i], perm: c.d[i] / c.i[i], mort: c.o[i] / c.i[i] * 100 }; }
+  var TOT = { i: T.i, v: T.v, d: T.d, o: T.o };
+  $('fonte').innerHTML = "<span class='vivo'></span>FONTE · DATASUS / SIH-SUS<br><b>" + rot(0) + ' a ' + rot(n - 1) + ' · último mês publicado: ' + MN[+D.meses[n - 1].split('-')[1] - 1] + '</b>';
+
+  // ---------- ano escolhido + barra de meses (só os meses do ano)
+  var anoSel = D.meses[n - 1].slice(0, 4), ANOS = [];
+  D.meses.forEach(function (m) { if (ANOS.indexOf(m.slice(0, 4)) < 0) ANOS.push(m.slice(0, 4)); });
+  var anosEl = document.createElement('div');
+  anosEl.id = 'anos'; anosEl.className = 'ab';
+  anosEl.innerHTML = ANOS.map(function (a) { return "<div class='yr' data-a='" + a + "'>" + a + '</div>'; }).join('');
+  st.appendChild(anosEl);
+  function idxAno() { var r = []; D.meses.forEach(function (m, i) { if (m.slice(0, 4) === anoSel) r.push(i); }); return r; }
+  function barra() {
+    $('meses').innerHTML = idxAno().map(function (i) { return "<div class='pl' data-i='" + i + "'>" + MA[+D.meses[i].split('-')[1] - 1] + '</div>'; }).join('');
+    st.querySelectorAll('.yr').forEach(function (y) { y.classList.toggle('on', y.dataset.a === anoSel); });
+    if (LIN) mapa();   // na primeira chamada o mapa ainda não existe
+  }
+  barra();
+  $('meses').onclick = function (e) { var p = e.target.closest('.pl'); if (p) muda(+p.dataset.i); };
+  anosEl.onclick = function (e) {
+    var y = e.target.closest('.yr'); if (!y || y.dataset.a === anoSel) return;
+    anoSel = y.dataset.a; barra(); tp = 0;
+    var ix = idxAno(); muda(ix[ix.length - 1]);
+  };
+
+  // ---------- cartões
+  var KP = [
+    { id: 'int', t: 'INTERNAÇÕES', f: function (v) { return f0.format(v); }, tipo: 'neu' },
+    { id: 'val', t: 'VALOR PAGO', f: mi, tipo: 'neu' },
+    { id: 'med', t: 'VALOR MÉDIO', f: function (v) { return 'R$ ' + f0.format(v); }, tipo: 'neu' },
+    { id: 'perm', t: 'PERMANÊNCIA MÉDIA', f: function (v) { return f1.format(v) + '<small>dias</small>'; }, tipo: 'inv' },
+    { id: 'mort', t: 'MORTALIDADE HOSPITALAR', f: function (v) { return f2.format(v) + '<small>%</small>'; }, tipo: 'inv' }
+  ];
+  var ser = {};
+  KP.forEach(function (k) { ser[k.id] = []; for (var i = 0; i < n; i++) ser[k.id].push(met(TOT, i)[k.id]); });
+  $('kpis').innerHTML = KP.map(function (k) { return "<div class='k'><div class='kl'>" + k.t + "</div><div class='kv' id='kv" + k.id + "'></div><div class='kd' id='kd" + k.id + "'></div><svg width='96' height='30' id='ks" + k.id + "'></svg></div>"; }).join('');
+  function spark(id, i) {
+    var s = ser[id], mn = Math.min.apply(null, s), mx = Math.max.apply(null, s), w = 96, h = 30;
+    var pts = s.map(function (v, j) { return [j / (n - 1) * (w - 6) + 3, h - 4 - (v - mn) / (mx - mn || 1) * (h - 8)]; });
+    $('ks' + id).innerHTML = "<polyline fill='none' stroke='#3B5A86' stroke-width='1.6' points='" + pts.map(function (p) { return p.join(','); }).join(' ') + "'/>" +
+      "<circle cx='" + pts[i][0] + "' cy='" + pts[i][1] + "' r='3.6' fill='#29D3F0'/><circle class='pul' cx='" + pts[i][0] + "' cy='" + pts[i][1] + "' r='5' fill='#29D3F0'/>";
+  }
+  var atual = {};
+  function conta(el, de, para, fmt) {
+    var t0 = performance.now();
+    (function passo(t) { var p = Math.min(1, (t - t0) / 650), e = 1 - Math.pow(1 - p, 3); el.innerHTML = fmt(de + (para - de) * e); if (p < 1) requestAnimationFrame(passo); })(t0);
+  }
+  function cartoes(i) {
+    var ref = i >= 12 ? i - 12 : i - 1, rotRef = ref >= 0 ? (i >= 12 ? 'vs ' + rot(ref) : 'vs mês anterior') : '';
+    KP.forEach(function (k) {
+      var v = ser[k.id][i];
+      conta($('kv' + k.id), atual[k.id] === undefined ? 0 : atual[k.id], v, k.f); atual[k.id] = v;
+      var d = '';
+      if (ref >= 0) {
+        var r = ser[k.id][ref], dv, txt;
+        if (k.id === 'mort') { dv = v - r; txt = f2.format(Math.abs(dv)) + ' p.p.'; }
+        else if (k.id === 'perm') { dv = v - r; txt = f1.format(Math.abs(dv)) + ' d'; }
+        else { dv = v / r - 1; txt = f1.format(Math.abs(dv) * 100) + '%'; }
+        var zero = txt.replace(/[^1-9]/g, '') === '';   // arredondou para zero: sem seta nem cor
+        var cls = zero || k.tipo !== 'inv' ? 'neu' : (dv < 0 ? 'pos' : 'neg');
+        d = "<b class='" + cls + "'>" + (zero ? '= ' : dv >= 0 ? '▲ ' : '▼ ') + txt + '</b> <span>' + rotRef + '</span>';
+      }
+      $('kd' + k.id).innerHTML = d;
+      spark(k.id, i);
+    });
+  }
+
+  // ---------- mapa de calor (top 10 motivos + demais)
+  var ord = D.cap.slice().sort(function (a, b) { return b.i.reduce(function (s, x) { return s + x; }, 0) - a.i.reduce(function (s, x) { return s + x; }, 0); });
+  var top = ord.slice(0, 10), resto = ord.slice(10);
+  var dem = { nome: 'Demais motivos (' + resto.length + ')', cor: '#5B6B8C', i: [], v: [], d: [], o: [], demais: true };
+  for (var j = 0; j < n; j++) ['i', 'v', 'd', 'o'].forEach(function (k) { dem[k].push(soma(resto, k, j)); });
+  var LIN = top.concat([dem]);
+  function corCel(p) {
+    var cs = [[22, 34, 58], [31, 95, 134], [41, 211, 240], [232, 251, 255]], x = p * 3, a = Math.min(2, Math.floor(x)), t = x - a;
+    var c = cs[a].map(function (v, q) { return Math.round(v + (cs[a + 1][q] - v) * t); });
+    return 'rgb(' + c.join(',') + ')';
+  }
+  // o mapa mostra só os meses do ano escolhido; a cor é a intensidade de cada motivo dentro desse ano
+  var CW = 28;
+  function mapa() {
+    var ix = idxAno(), totAno = 0;
+    CW = Math.min(64, Math.floor(588 / ix.length) - 4);
+    ix.forEach(function (k) { totAno += T.i[k]; });
+    var cel = "style='width:" + CW + "px;margin-right:4px;";
+    var g = "<div class='hx'>" + ix.map(function (k) { return '<div ' + cel + "'>" + MA[+D.meses[k].split('-')[1] - 1] + '</div>'; }).join('') + '</div>';
+    LIN.forEach(function (c, r) {
+      var vs = ix.map(function (k) { return c.i[k]; });
+      var mn = Math.min.apply(null, vs), mx = Math.max.apply(null, vs), tot = vs.reduce(function (s, x) { return s + x; }, 0);
+      g += "<div class='hr' data-r='" + r + "'><div class='hn'><i style='background:" + c.cor + "'></i>" + c.nome + '<em>' + f1.format(tot / totAno * 100) + '%</em></div>';
+      ix.forEach(function (k, p) {
+        g += "<div class='hc' data-r='" + r + "' data-k='" + k + "' " + cel + 'background:' + corCel((c.i[k] - mn) / (mx - mn || 1)) +
+          ';transition-delay:' + (r * 40 + p * 25) + 'ms;animation-delay:' + (p * 0.12 + r * 0.03).toFixed(2) + "s'></div>";
+      });
+      g += '</div>';
+    });
+    g += "<div class='hcol' id='hcol' style='width:" + (CW + 2) + 'px;height:' + (LIN.length * 33 + 18) + "px'></div>";
+    $('hmg').innerHTML = g;
+    setTimeout(function () { st.querySelectorAll('.hc').forEach(function (e) { e.classList.add('vis'); }); }, 60);
+  }
+  mapa();
+  var tip = $('tip');
+  $('hmg').onmousemove = function (e) {
+    var c = e.target.closest('.hc');
+    if (!c) { tip.style.opacity = 0; return; }
+    var L = LIN[+c.dataset.r], k = +c.dataset.k;
+    tip.innerHTML = "<span style='color:" + L.cor + "'>●</span> " + L.nome + '<br><b>' + f0.format(L.i[k]) + '</b> internações em ' + rot(k) +
+      '<br>' + f1.format(L.i[k] / T.i[k] * 100) + '% do mês · valor médio R$ ' + f0.format(L.v[k] / L.i[k]);
+    var b = st.getBoundingClientRect(), s = b.width / 1280;
+    tip.style.left = Math.min(1060, (e.clientX - b.left) / s + 14) + 'px'; tip.style.top = ((e.clientY - b.top) / s + 14) + 'px'; tip.style.opacity = 1;
+  };
+  $('hmg').onmouseleave = function () { tip.style.opacity = 0; };
+  $('hmg').onclick = function (e) {
+    var c = e.target.closest('.hc'), r = e.target.closest('.hr');
+    if (c) { muda(+c.dataset.k); abre(+c.dataset.r); } else if (r) abre(+r.dataset.r);
+  };
+
+  // ---------- macrorregiões e caráter
+  function direita(i) {
+    $('dirm').textContent = rot(i);
+    var ms = D.macro.slice().sort(function (a, b) { return b.i[i] - a.i[i]; }), mx = ms[0].i[i];
+    var html = ms.map(function (m) {
+      return "<div class='mr' data-n='" + m.nome + "'><div class='nm'>" + m.nome + "</div><div class='tk'><div class='br' style='width:" + (m.i[i] / mx * 100) + "%'></div></div><div class='vl'>" + f0.format(m.i[i]) + '</div></div>';
+    }).join('');
+    $('mac').innerHTML = html;
+    var cores = { 'Urgência': '#FF6B81', 'Eletivo': '#29D3F0', 'Acidentes e lesões': '#F4E06D' }, tot = 0;
+    D.car.forEach(function (c) { tot += c.i[i]; });
+    $('car').innerHTML = D.car.map(function (c) { return "<div style='width:" + (c.i[i] / tot * 100) + '%;background:' + (cores[c.nome] || '#5B6B8C') + "'></div>"; }).join('');
+    $('carl').innerHTML = D.car.map(function (c) { return "<span><i style='background:" + (cores[c.nome] || '#5B6B8C') + "'></i>" + c.nome + ' ' + f0.format(c.i[i] / tot * 100) + '%</span>'; }).join('');
+    var urg = D.car.filter(function (c) { return c.nome === 'Urgência'; })[0];
+    $('frase').innerHTML = urg ? '<b>' + f0.format(Math.round(urg.i[i] / tot * 10)) + ' em cada 10</b> internações de ' + rot(i) + ' entraram pela urgência.' : '';
+  }
+
+  // ---------- gaveta do motivo
+  function abre(r) {
+    mot = r; var c = LIN[r], i = sel, m = met(c, i), mt = met(TOT, i);
+    var mx = c.i.indexOf(Math.max.apply(null, c.i)), mn = c.i.indexOf(Math.min.apply(null, c.i));
+    var w = 326, h = 130, vmax = Math.max.apply(null, c.i) * 1.12;
+    var lin = function (ano, cor, larg) {
+      var p = [];
+      D.meses.forEach(function (mm, k) { if (mm.slice(0, 4) === ano) p.push([(+mm.split('-')[1] - 1) / 11 * (w - 20) + 10, h - 16 - c.i[k] / vmax * (h - 30), k]); });
+      return p.length ? "<polyline fill='none' stroke='" + cor + "' stroke-width='" + larg + "' stroke-linejoin='round' points='" + p.map(function (q) { return q[0] + ',' + q[1]; }).join(' ') + "'/>" +
+        p.map(function (q) {
+          // o mês que está na tela ganha destaque na curva
+          return q[2] === sel ? "<circle class='pul' cx='" + q[0] + "' cy='" + q[1] + "' r='6' fill='" + cor + "'/><circle cx='" + q[0] + "' cy='" + q[1] + "' r='4.6' fill='" + cor + "' stroke='#EEF3FC' stroke-width='1.6'/>"
+            : "<circle cx='" + q[0] + "' cy='" + q[1] + "' r='2.6' fill='" + cor + "'/>";
+        }).join('') : '';
+    };
+    var eixo = MA.map(function (a, k) { return "<text x='" + ((k / 11) * (w - 20) + 10) + "' y='" + (h - 2) + "' font-size='9' fill='#5F6E8A' text-anchor='middle'>" + a.slice(0, 1).toUpperCase() + '</text>'; }).join('');
+    var anos = D.meses[0].slice(0, 4), anoB = D.meses[n - 1].slice(0, 4);
+    $('gavc').innerHTML = "<div class='kl'>MOTIVO DA INTERNAÇÃO · " + rot(i).toUpperCase() + "</div><div class='gt' style='margin-top:6px'><i style='background:" + c.cor + "'></i>" + c.nome + '</div>' +
+      "<div class='gg'><div class='gc'><div class='kl'>INTERNAÇÕES</div><div class='kv'>" + f0.format(m.int) + "<small>" + f1.format(m.int / mt.int * 100) + "% do mês</small></div></div>" +
+      "<div class='gc'><div class='kl'>VALOR MÉDIO</div><div class='kv'>R$ " + f0.format(m.med) + "</div></div>" +
+      "<div class='gc'><div class='kl'>PERMANÊNCIA</div><div class='kv'>" + f1.format(m.perm) + "<small>dias</small></div></div>" +
+      "<div class='gc'><div class='kl'>MORTALIDADE</div><div class='kv'>" + f2.format(m.mort) + "<small>%</small></div></div></div>" +
+      "<div class='kl' style='margin-top:14px'>INTERNAÇÕES POR MÊS · <span style='color:#5F7FA8'>" + anos + "</span> × <span style='color:" + c.cor + "'>" + anoB + '</span></div>' +
+      "<svg width='" + w + "' height='" + h + "' style='margin-top:6px'>" + lin(anos, '#5F7FA8', 1.8) + lin(anoB, c.cor, 2.6) + eixo + '</svg>' +
+      "<div class='nota'>Pico em <b>" + rot(mx) + '</b> (' + f0.format(c.i[mx]) + ') · menor em <b>' + rot(mn) + '</b> (' + f0.format(c.i[mn]) + ').<br>No pico, foram <b>' + f0.format((c.i[mx] / c.i[mn] - 1) * 100) + '% a mais</b> que no mês mais fraco.</div>';
+    $('gav').classList.add('on');
+    st.querySelectorAll('.hr').forEach(function (e) { e.style.background = +e.dataset.r === r ? '#16223A' : ''; });
+  }
+  $('gx').onclick = function () { mot = -1; $('gav').classList.remove('on'); st.querySelectorAll('.hr').forEach(function (e) { e.style.background = ''; }); };
+
+  // ---------- muda o mês
+  function muda(i) {
+    sel = i;
+    st.querySelectorAll('.pl').forEach(function (p) { p.classList.toggle('on', +p.dataset.i === i); });
+    var pos = idxAno().indexOf(i);
+    $('hcol').style.display = pos < 0 ? 'none' : '';
+    $('hcol').style.left = (196 - 1 + pos * (CW + 4)) + 'px';
+    cartoes(i); direita(i);
+    if (mot >= 0) abre(mot);
+  }
+  // ---------- ▶ modo TV: passa sozinho pelos meses e pelos motivos (abre a gaveta de cada um)
+  // tempo entre trocas, ajustável de 3 s a 1 min pelos botões − / +
+  var TEMPOS = [3, 5, 10, 15, 20, 30, 45, 60], ti = 1;
+  var ctl = document.createElement('div');
+  ctl.id = 'ctl';
+  ctl.innerHTML = "<div class='stp' id='menos' title='trocar mais rápido'>−</div><div id='tempo'></div><div class='stp' id='mais' title='trocar mais devagar'>+</div>" +
+    "<div id='pw'><svg class='anel' id='anel' width='34' height='34'><circle cx='17' cy='17' r='15'/></svg><div id='play' title='modo TV: passa sozinho pelos meses e motivos'>▶</div></div>";
+  st.appendChild(ctl);
+  var tmr = null, tr = 0, tp = 0, play = $('play'), anel = $('anel');
+  // percorre todos os meses do ano escolhido para um motivo; depois passa para o próximo motivo
+  function avanca() {
+    var ix = idxAno();
+    if (tp >= ix.length) { tp = 0; tr = (tr + 1) % LIN.length; }
+    muda(ix[tp]); abre(tr); tp++;
+  }
+  function reinicia() {   // recomeça o anel junto com o relógio
+    anel.classList.remove('on'); void anel.getBoundingClientRect(); if (tmr) anel.classList.add('on');
+  }
+  function toca(on) {
+    clearInterval(tmr); tmr = null; play.classList.toggle('on', on); play.innerHTML = on ? '❚❚' : '▶';
+    if (on) { tr = mot >= 0 ? mot : tr; tp = 0; avanca(); tmr = setInterval(function () { avanca(); reinicia(); }, msVideo || TEMPOS[ti] * 1000); }
+    reinicia();
+  }
+  function tempo(i) {
+    ti = Math.max(0, Math.min(TEMPOS.length - 1, i));
+    var t = TEMPOS[ti];
+    $('tempo').innerHTML = (t < 60 ? t + ' s' : '1 min') + '<small>POR TELA</small>';
+    st.style.setProperty('--t', t + 's');
+    $('menos').classList.toggle('off', ti === 0); $('mais').classList.toggle('off', ti === TEMPOS.length - 1);
+    if (tmr) { clearInterval(tmr); tmr = setInterval(function () { avanca(); reinicia(); }, t * 1000); reinicia(); }
+  }
+  $('menos').onclick = function () { tempo(ti - 1); };
+  $('mais').onclick = function () { tempo(ti + 1); };
+  tempo(ti);
+  play.onclick = function () { toca(!tmr); };
+  // qualquer clique de quem está usando tira do modo TV
+  ['meses', 'hmg', 'gx'].forEach(function (id) { $(id).addEventListener('click', function () { toca(false); }, true); });
+  // só para gravar vídeo (sem botão na tela): troca mais rápida que o mínimo de 3 s
+  var msVideo = 0;
+  function velocidade(ms) { msVideo = ms; st.style.setProperty('--t', ms + 'ms'); if (tmr) toca(true); }
+  window.painel = { muda: muda, abre: abre, fecha: function () { $('gx').onclick(); }, toca: toca, tempo: tempo, velocidade: velocidade };
+  muda(sel);
+  var tAuto = setTimeout(function () { if (!tmr && mot < 0) toca(true); }, 2500);
+  window.__painelPara = function () { clearInterval(tmr); clearTimeout(tAuto); };
+})();
+</script>
+</body></html>
