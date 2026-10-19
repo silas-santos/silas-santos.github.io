@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silas Santos · Portfólio de BI</title>
+<meta name="description" content="Relatórios e painéis em Power BI com dados públicos de saúde e agro do Rio Grande do Sul.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Silas Santos · Portfólio de BI">
+<meta property="og:description" content="Relatórios e painéis em Power BI com dados públicos de saúde e agro do Rio Grande do Sul. Interativos, direto no navegador.">
+<meta property="og:image" content="capa.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--barra:#1F2328;--lateral:#F3F2F1;--fundo:#FAF9F8;--card:#FFFFFF;--linha:#E1DFDD;--texto:#201F1E;--suave:#605E5C;--destaque:#1FB5A5;--acento:#0F6CBD;--ok:#2A9D8F}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:var(--texto);background:var(--fundo)}
+a{color:inherit}
+/* barra do topo */
+#topo{position:fixed;inset:0 0 auto 0;height:48px;background:var(--barra);color:#fff;display:flex;align-items:center;gap:14px;padding:0 16px;z-index:5}
+#topo .marca{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px;text-decoration:none}
+#topo .marca i{width:28px;height:28px;border-radius:6px;background:var(--destaque);color:#FFFFFF;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
+#topo .marca span{opacity:.7;font-weight:400;margin-left:2px}
+#busca{margin-left:auto;width:min(340px,40vw);height:30px;border-radius:15px;border:none;padding:0 14px;font:inherit;font-size:13px;background:#33383F;color:#fff}
+#busca::placeholder{color:#A6ADB5}
+#topo .lnk{font-size:13px;color:#D6D9DD;text-decoration:none;padding:6px 10px;border-radius:6px}
+#topo .lnk:hover{background:#33383F}
+/* menu lateral */
+#lateral{position:fixed;top:48px;bottom:0;left:0;width:220px;background:var(--lateral);border-right:1px solid var(--linha);padding:14px 10px;overflow:auto;z-index:4;transition:transform .25s}
+#lateral h4{font-size:11px;letter-spacing:1.2px;color:var(--suave);margin:18px 10px 6px;font-weight:700}
+#lateral a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;font-size:13.5px;text-decoration:none;color:var(--texto);cursor:pointer}
+#lateral a:hover{background:#E8E6E4}
+#lateral a.on{background:#fff;box-shadow:inset 3px 0 0 var(--destaque);font-weight:600}
+#lateral a b{margin-left:auto;font-size:11px;color:var(--suave);font-weight:400}
+#lateral .ico{width:18px;text-align:center;opacity:.75}
+/* conteúdo */
+#principal{margin-left:220px;padding:64px 28px 28px;min-height:100%}
+.intro{display:flex;gap:28px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:22px}
+.intro h1{font-size:26px;margin:0 0 6px;font-weight:700}
+.intro p{margin:0;color:var(--suave);max-width:720px;line-height:1.5;font-size:14px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap}
+.filtros span{padding:5px 12px;border-radius:14px;border:1px solid var(--linha);background:#fff;font-size:12.5px;cursor:pointer;user-select:none}
+.filtros span.on{background:var(--barra);color:#fff;border-color:var(--barra)}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--linha);border-radius:10px;overflow:hidden;cursor:pointer;transition:box-shadow .2s, transform .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.card:hover{box-shadow:0 6px 22px rgba(0,0,0,.12);transform:translateY(-2px)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#ddd;border-bottom:1px solid var(--linha)}
+.card .c{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card .t{font-weight:600;font-size:15px}
+.card .r{font-size:12.5px;color:var(--suave);line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .m{display:flex;gap:6px;align-items:center;margin-top:auto;padding-top:6px;font-size:11.5px;color:var(--suave)}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#F3F2F1;color:#3B3A39;white-space:nowrap}
+.tag.tv{background:#DDF4F1;color:#0E6B61}
+.tag.rel{background:#E0F0FF;color:#0F4C81}
+/* tela do relatório */
+#visor{display:none}
+.trilha{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--suave);margin-bottom:10px;flex-wrap:wrap}
+.trilha a{text-decoration:none;cursor:pointer}
+.trilha a:hover{text-decoration:underline}
+.trilha b{color:var(--texto)}
+.acoes{margin-left:auto;display:flex;gap:6px}
+.acoes button{font:inherit;font-size:12.5px;border:1px solid var(--linha);background:#fff;border-radius:6px;padding:5px 10px;cursor:pointer}
+.acoes button:hover{border-color:#8A8886}
+.area{display:flex;gap:14px;align-items:flex-start}
+.palco{flex:1;min-width:0;background:#E9E8E6;border:1px solid var(--linha);border-radius:8px;overflow:hidden}
+#tela{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#fff}
+#tela iframe{position:absolute;left:0;top:0;width:1280px;height:720px;border:0;transform-origin:0 0}
+.abas{display:flex;gap:0;background:#fff;border-top:1px solid var(--linha);overflow:auto}
+.abas span{padding:9px 16px;font-size:12.5px;cursor:pointer;white-space:nowrap;border-right:1px solid var(--linha);color:var(--suave)}
+.abas span.on{color:var(--texto);font-weight:600;box-shadow:inset 0 -3px 0 var(--destaque)}
+#sobre{width:320px;flex-shrink:0;background:#fff;border:1px solid var(--linha);border-radius:8px;padding:16px;font-size:13px;line-height:1.5}
+#sobre h3{margin:0 0 4px;font-size:15px}
+#sobre h5{margin:14px 0 6px;font-size:11px;letter-spacing:1.2px;color:var(--suave)}
+#sobre video{width:100%;border-radius:6px;margin-top:4px;background:#000}
+#sobre .tags{display:flex;gap:5px;flex-wrap:wrap}
+.oculto #sobre{display:none}
+.vazio{padding:40px;text-align:center;color:var(--suave)}
+/* celular */
+#menu{display:none;background:none;border:0;color:#fff;font-size:20px;cursor:pointer}
+@media (max-width:900px){
+  #menu{display:block}
+  #lateral{transform:translateX(-100%)}
+  body.menu #lateral{transform:none;box-shadow:0 0 30px rgba(0,0,0,.25)}
+  #principal{margin-left:0;padding:64px 16px 20px}
+  .area{flex-direction:column;align-items:stretch}
+  #sobre{width:100%}
+  #topo .lnk{display:none}
+  #topo .marca{white-space:nowrap}
+  #topo .marca span{display:none}
+  #busca{width:auto;flex:1;min-width:0}
+}
+</style>
+</head>
+<body>
+<header id="topo">
+  <button id="menu" aria-label="menu">☰</button>
+  <a class="marca" href="#/"><i>SS</i>Silas Santos <span>· Portfólio de BI</span></a>
+  <input id="busca" placeholder="Pesquisar relatórios e painéis" autocomplete="off">
+  <a class="lnk" href="#/sobre">Sobre mim</a>
+</header>
+<nav id="lateral"></nav>
+<main id="principal">
+  <section id="galeria">
+    <div class="intro">
+      <div><h1 id="titGaleria">Relatórios e painéis</h1>
+      <p id="txtGaleria">Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.</p></div>
+      <div class="filtros" id="filtros"></div>
+    </div>
+    <div class="grade" id="grade"></div>
+  </section>
+  <section id="visor">
+    <div class="trilha"><a href="#/">Início</a> › <a id="trWs"></a> › <b id="trTit"></b>
+      <div class="acoes"><button id="btSobre">Ocultar detalhes</button><button id="btCheia">Tela cheia</button></div></div>
+    <div class="area" id="area">
+      <div class="palco"><div id="tela"><iframe id="quadro" title="relatório" loading="eager"></iframe></div><div class="abas" id="abas"></div></div>
+      <aside id="sobre"></aside>
+    </div>
+  </section>
+</main>
+<script src="catalogo.js"></script>
+<script>
+(function () {
+  var C = window.CATALOGO, $ = function (id) { return document.getElementById(id); };
+  var WS = [['Saúde', '✚'], ['Agro', '❀'], ['Exemplos', '◇']];
+  var filtroWs = '', termo = '';
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // menu lateral (como os workspaces do Power BI Service)
+  function menu(ativo) {
+    $('lateral').innerHTML = "<a href='#/' class='" + (ativo === 'inicio' ? 'on' : '') + "'><span class='ico'>⌂</span>Início<b>" + C.length + '</b></a>' +
+      '<h4>WORKSPACES</h4>' + WS.map(function (w) {
+        var n = C.filter(function (r) { return r.workspace === w[0]; }).length;
+        return "<a href='#/ws/" + encodeURIComponent(w[0]) + "' class='" + (ativo === w[0] ? 'on' : '') + "'><span class='ico'>" + w[1] + '</span>' + w[0] + '<b>' + n + '</b></a>';
+      }).join('') + '<h4>RELATÓRIOS</h4>' + C.map(function (r) {
+        return "<a href='#/r/" + r.id + "' class='" + (ativo === r.id ? 'on' : '') + "'><span class='ico'>" + (r.tipo === 'Relatório' ? '▤' : '▣') + '</span>' + esc(r.titulo) + '</a>';
+      }).join('');
+  }
+  function card(r) {
+    return "<a class='card' href='#/r/" + r.id + "'><img src='" + r.miniatura + "' alt='" + esc(r.titulo) + "' loading='lazy'>" +
+      "<div class='c'><div class='t'>" + esc(r.titulo) + "</div><div class='r'>" + esc(r.resumo) + '</div>' +
+      "<div class='m'><span class='tag " + (r.tipo === 'Relatório' ? 'rel' : 'tv') + "'>" + r.tipo + '</span><span class="tag">' + r.workspace + '</span>' +
+      '<span style="margin-left:auto">' + r.paginas.length + (r.paginas.length > 1 ? ' páginas' : ' página') + '</span></div></div></a>';
+  }
+  function galeria() {
+    var lista = C.filter(function (r) {
+      return (!filtroWs || r.workspace === filtroWs) && (!termo || (r.titulo + ' ' + r.resumo + ' ' + r.tecnicas.join(' ') + ' ' + r.fontes.join(' ')).toLowerCase().indexOf(termo) >= 0);
+    });
+    $('filtros').innerHTML = ["<span data-w='' class='" + (filtroWs ? '' : 'on') + "'>Todos</span>"].concat(WS.map(function (w) { return "<span data-w='" + w[0] + "' class='" + (filtroWs === w[0] ? 'on' : '') + "'>" + w[0] + '</span>'; })).join('');
+    $('titGaleria').textContent = filtroWs ? 'Workspace · ' + filtroWs : 'Relatórios e painéis';
+    $('grade').innerHTML = lista.length ? lista.map(card).join('') : "<div class='vazio'>Nada encontrado para “" + esc(termo) + "”.</div>";
+  }
+  $('filtros').onclick = function (e) { var s = e.target.closest('span'); if (s) location.hash = s.dataset.w ? '#/ws/' + encodeURIComponent(s.dataset.w) : '#/'; };
+  $('busca').oninput = function () { termo = this.value.trim().toLowerCase(); if (!/^#\/(ws\/.*)?$/.test(location.hash || '#/')) location.hash = '#/'; galeria(); };
+
+  // visor do relatório: o preview fica num quadro de 1280x720 escalado para caber, com as abas de página embaixo
+  var atual = null;
+  function encaixa() { var t = $('tela'), k = t.clientWidth / 1280; $('quadro').style.transform = 'scale(' + k + ')'; }
+  addEventListener('resize', encaixa);
+  function abre(r, i) {
+    atual = r;
+    $('galeria').style.display = 'none'; $('visor').style.display = 'block';
+    $('trWs').textContent = r.workspace; $('trWs').href = '#/ws/' + encodeURIComponent(r.workspace); $('trTit').textContent = r.titulo;
+    var src = r.paginas[i].arquivo;
+    if ($('quadro').getAttribute('src') !== src) $('quadro').src = src;
+    $('abas').innerHTML = r.paginas.map(function (p, j) { return "<span data-i='" + j + "' class='" + (j === i ? 'on' : '') + "'>" + (r.paginas.length > 1 ? (j + 1) + ' · ' : '') + esc(p.nome) + '</span>'; }).join('');
+    $('sobre').innerHTML = '<h3>' + esc(r.titulo) + "</h3><div class='tags'><span class='tag " + (r.tipo === 'Relatório' ? 'rel' : 'tv') + "'>" + r.tipo + "</span><span class='tag'>" + r.workspace + "</span><span class='tag'>" + r.data + '</span></div>' +
+      '<p>' + esc(r.resumo) + '</p>' +
+      '<h5>FONTES DOS DADOS</h5>' + r.fontes.map(esc).join(' · ') +
+      "<h5>COMO FOI FEITO</h5><div class='tags'>" + r.tecnicas.map(function (t) { return "<span class='tag'>" + esc(t) + '</span>'; }).join('') + '</div>' +
+      (r.video ? "<h5>VÍDEO</h5><video src='" + r.video + "' controls muted playsinline preload='metadata'></video>" : '') +
+      "<h5>SOBRE ESTA VERSÃO</h5><span style='color:#605E5C'>Versão web do relatório feito no Power BI, com os mesmos visuais e dados. Os dados são públicos e agregados.</span>";
+    menu(r.id); encaixa(); scrollTo(0, 0);
+  }
+  $('abas').onclick = function (e) { var s = e.target.closest('span'); if (s && atual) location.hash = '#/r/' + atual.id + '/' + (+s.dataset.i + 1); };
+  $('btSobre').onclick = function () { var o = $('area').classList.toggle('oculto'); this.textContent = o ? 'Mostrar detalhes' : 'Ocultar detalhes'; encaixa(); };
+  $('btCheia').onclick = function () { var t = $('tela'); (t.requestFullscreen || t.webkitRequestFullscreen).call(t); };
+  document.addEventListener('fullscreenchange', function () { setTimeout(encaixa, 50); });
+  $('tela').addEventListener('fullscreenchange', encaixa);
+  $('menu').onclick = function () { document.body.classList.toggle('menu'); };
+
+  function rota() {
+    document.body.classList.remove('menu');
+    var h = (location.hash || '#/').slice(1).split('/').filter(Boolean);
+    if (h[0] === 'r') {
+      var r = C.filter(function (x) { return x.id === h[1]; })[0];
+      if (r) return abre(r, Math.max(0, Math.min(r.paginas.length - 1, (+h[2] || 1) - 1)));
+    }
+    if (h[0] === 'sobre') {
+      $('galeria').style.display = 'block'; $('visor').style.display = 'none'; menu('');
+      $('titGaleria').textContent = 'Sobre mim';
+      $('txtGaleria').innerHTML = 'Analista de BI e professor do curso Técnico em Desenvolvimento de Sistemas. <em>(texto a definir)</em>';
+      $('filtros').innerHTML = ''; $('grade').innerHTML = ''; return;
+    }
+    filtroWs = h[0] === 'ws' ? decodeURIComponent(h[1] || '') : '';
+    $('galeria').style.display = 'block'; $('visor').style.display = 'none';
+    $('txtGaleria').textContent = 'Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.';
+    menu(filtroWs || 'inicio'); galeria();
+  }
+  addEventListener('hashchange', rota);
+  rota();
+})();
+</script>
+</body>
+</html>
