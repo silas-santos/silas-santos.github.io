@@ -24,7 +24,17 @@ window.CATALOGO = [
    "MAPA · Seguro rural (PSR)"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/estiagem.jpg"
+  "miniatura": "miniaturas/estiagem.jpg",
+  "explica": [
+   "Mostra quanto as secas recentes custaram para a soja gaúcha. Cada município é pintado pela produtividade da safra comparada à sua safra normal (a média de 2015 a 2019): vermelho é quebra, verde é colheita acima do normal.",
+   "As bolinhas são as estações do INMET, com a chuva de novembro a março (o período que decide a soja). Os cartões trazem a produção do estado, a produtividade, a perda estimada em reais, a chuva em relação ao normal e as indenizações do seguro rural por seca."
+  ],
+  "uso": [
+   "O painel troca de safra sozinho, de 2015 a 2025, como numa TV.",
+   "Clique numa safra na linha do tempo para fixar o ano; o botão ❚❚ pausa.",
+   "Em \"tempo por safra\" você escolhe de 3 segundos a 1 minuto por tela."
+  ],
+  "destaque": "Quatro estiagens em seis safras (2020, 2022, 2023 e 2025) custaram cerca de R$ 76 bilhões só na soja. Em 2022 a produção caiu 54%, e em 2024 o problema foi o contrário: chuva demais no sul."
  },
  {
   "id": "bebes",
@@ -60,7 +70,19 @@ window.CATALOGO = [
    "IBGE"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/bebes.jpg"
+  "miniatura": "miniaturas/bebes.jpg",
+  "explica": [
+   "Cruza a demanda por creche com o que cada município oferece hoje. As crianças de 0 a 3 anos vêm dos nascimentos do SINASC, as matrículas do Censo Escolar e a meta do Plano Nacional de Educação: 50% das crianças nessa idade em creche.",
+   "\"Vagas para chegar à meta\" é quanto falta para atingir esses 50% em 2027, com os nascimentos projetados. Não é fila de espera, que não existe em base pública.",
+   "A segunda página compara necessidade (natalidade, mães adolescentes, pré-natal e mortalidade infantil) com capacidade (gasto em saúde, educação infantil e cobertura de creche), sempre entre municípios do mesmo porte."
+  ],
+  "uso": [
+   "Escolha a macrorregião de saúde para ver só a sua região; o mapa amplia sozinho.",
+   "Clique num município do mapa: cartões, ranking e nascimentos passam a mostrar só ele.",
+   "Na página 2, clique num ponto (um município) ou no fundo de um quadrante (todos daquele grupo).",
+   "Na página 3, o perfil completo de qualquer município, com link para o relatório dos nascimentos."
+  ],
+  "destaque": "O RS tem 45,5% das crianças de 0 a 3 anos em creche. Para chegar a 50% em 2027 faltam cerca de 34,9 mil vagas, espalhadas por 201 municípios."
  },
  {
   "id": "nascimentos",
@@ -94,7 +116,18 @@ window.CATALOGO = [
    "IBGE"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/nascimentos.jpg"
+  "miniatura": "miniaturas/nascimentos.jpg",
+  "explica": [
+   "Conta como nascem os bebês gaúchos com os microdados do SINASC de 2023 a 2025: tipo de parto, prematuridade, baixo peso, pré-natal, idade e escolaridade da mãe, sem nenhum dado individual.",
+   "A primeira página mostra o estado e cada município (mapa e enxame, em que cada ponto é uma cidade). A segunda olha para a mãe. A terceira é o perfil do município comparado ao RS, com um resumo escrito automaticamente."
+  ],
+  "uso": [
+   "Troque o ano e o indicador (cesárea, prematuridade, baixo peso, pré-natal).",
+   "Clique num município no mapa ou no enxame: cartões, waffle e recorte filtram.",
+   "Na página 2, clique numa faixa de idade da mãe e o outro gráfico realça a mesma faixa.",
+   "Na página 3, escolha qualquer município para ver o perfil."
+  ],
+  "destaque": "Em 2024, 65,7% dos bebês do RS nasceram de cesárea. Entre mães com 35 anos ou mais, foram 75%; entre as de 15 a 19, 50%."
  },
  {
   "id": "leitos",
@@ -115,11 +148,21 @@ window.CATALOGO = [
    "DAX que gera JSON"
   ],
   "fontes": [
-   "DATASUS · CNES",
-   "DATASUS · SIH"
+   "DATASUS · CNES (leitos)",
+   "DATASUS · SIH (internações)"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/leitos.jpg"
+  "miniatura": "miniaturas/leitos.jpg",
+  "explica": [
+   "Mostra onde o sistema hospitalar do SUS aperta. Junta os leitos SUS de cada macrorregião de saúde (CNES, incluindo os complementares, como UTI) com os dias de internação do SIH para estimar a ocupação mês a mês.",
+   "Ocupação estimada = dias de internação no mês ÷ (leitos SUS × dias do mês). É uma aproximação, porque o SIH registra a internação no mês em que ela é processada."
+  ],
+  "uso": [
+   "O painel passa os meses sozinho; o botão ▶/❚❚ liga e desliga e os botões − e + mudam o tempo por mês.",
+   "Clique numa macrorregião no mapa ou num medidor para abrir o detalhe: ocupação, leitos, internações, permanência média e tipos de leito.",
+   "Clique num mês na barra ou na linha do tempo para fixar o período. O inverno (junho a agosto) aparece sombreado."
+  ],
+  "destaque": "Os medidores ordenam as 7 macrorregiões pela ocupação do último mês, e a linha deixa comparar o inverno com o resto do ano em cada uma."
  },
  {
   "id": "dengue",
@@ -144,7 +187,17 @@ window.CATALOGO = [
    "IBGE"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/dengue.jpg"
+  "miniatura": "miniaturas/dengue.jpg",
+  "explica": [
+   "Acompanha o avanço da dengue no RS semana a semana, com os casos prováveis do SINAN por município de residência.",
+   "O mapa acende onde há casos naquela semana, o ranking mostra os municípios com mais casos no ano até ali, e a curva epidêmica compara 2024, 2025 e 2026."
+  ],
+  "uso": [
+   "Escolha o ano; o botão ▶ passa as semanas sozinho, como num timelapse.",
+   "Clique num município no mapa ou no ranking para abrir o detalhe dele.",
+   "Os botões − e + mudam a velocidade do timelapse."
+  ],
+  "destaque": "O timelapse deixa ver a epidemia se espalhando pelo estado e, em seguida, se concentrando na região metropolitana."
  },
  {
   "id": "panorama",
@@ -168,7 +221,17 @@ window.CATALOGO = [
    "DATASUS · SIH"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/panorama.jpg"
+  "miniatura": "miniaturas/panorama.jpg",
+  "explica": [
+   "Visão geral das internações do SUS no RS por motivo (capítulo da CID): quantidade, valor pago, valor médio, permanência e mortalidade hospitalar.",
+   "O mapa de calor cruza motivo × mês do ano escolhido. Ao lado, o detalhe do motivo em foco."
+  ],
+  "uso": [
+   "O modo TV percorre todos os meses de um motivo e depois passa para o próximo.",
+   "Escolha o ano e clique em qualquer motivo ou mês para fixar.",
+   "Os botões − e + definem o tempo por tela, de 3 segundos a 1 minuto."
+  ],
+  "destaque": "Feito para ficar numa TV: roda sozinho, mas qualquer clique assume o controle."
  },
  {
   "id": "odonto",
@@ -191,6 +254,14 @@ window.CATALOGO = [
    "Dados fictícios"
   ],
   "data": "out/2026",
-  "miniatura": "miniaturas/odonto.jpg"
+  "miniatura": "miniaturas/odonto.jpg",
+  "explica": [
+   "Exemplo de painel de TV para uma clínica odontológica, com dados fictícios: agenda do dia, pacientes atendidos, faturamento, atendimentos da semana, convênios do mês e evolução do ano.",
+   "Foi o primeiro projeto da série, para testar o formato de painel em tela cheia, com tipografia grande e leitura à distância."
+  ],
+  "uso": [
+   "É um painel para ficar aberto numa tela: não precisa de clique."
+  ],
+  "destaque": "Dados inventados, para mostrar o layout sem expor nenhuma informação real de paciente."
  }
 ];

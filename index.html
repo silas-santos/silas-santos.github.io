@@ -74,6 +74,11 @@ a{color:inherit}
 #sobre h5{margin:14px 0 6px;font-size:11px;letter-spacing:1.2px;color:var(--suave)}
 #sobre video{width:100%;border-radius:6px;margin-top:4px;background:#000}
 #sobre .tags{display:flex;gap:5px;flex-wrap:wrap}
+#sobre p{margin:10px 0 0}
+#sobre .uso{margin:0;padding-left:18px}
+#sobre .uso li{margin:3px 0}
+#sobre .dest{margin-top:14px;background:#E8F6F4;border-left:3px solid var(--destaque);border-radius:6px;padding:10px 12px;color:#0E4F48}
+#sobre .dest b{display:block;font-size:11px;letter-spacing:1.2px;margin-bottom:3px}
 .oculto #sobre{display:none}
 .vazio{padding:40px;text-align:center;color:var(--suave)}
 /* celular */
@@ -165,7 +170,9 @@ a{color:inherit}
     if ($('quadro').getAttribute('src') !== src) $('quadro').src = src;
     $('abas').innerHTML = r.paginas.map(function (p, j) { return "<span data-i='" + j + "' class='" + (j === i ? 'on' : '') + "'>" + (r.paginas.length > 1 ? (j + 1) + ' · ' : '') + esc(p.nome) + '</span>'; }).join('');
     $('sobre').innerHTML = '<h3>' + esc(r.titulo) + "</h3><div class='tags'><span class='tag " + (r.tipo === 'Relatório' ? 'rel' : 'tv') + "'>" + r.tipo + "</span><span class='tag'>" + r.workspace + "</span><span class='tag'>" + r.data + '</span></div>' +
-      '<p>' + esc(r.resumo) + '</p>' +
+      (r.explica || [r.resumo]).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') +
+      (r.uso ? "<h5>COMO USAR</h5><ul class='uso'>" + r.uso.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      (r.destaque ? "<div class='dest'><b>DESTAQUE</b>" + esc(r.destaque) + '</div>' : '') +
       '<h5>FONTES DOS DADOS</h5>' + r.fontes.map(esc).join(' · ') +
       "<h5>COMO FOI FEITO</h5><div class='tags'>" + r.tecnicas.map(function (t) { return "<span class='tag'>" + esc(t) + '</span>'; }).join('') + '</div>' +
       (r.video ? "<h5>VÍDEO</h5><video src='" + r.video + "' controls muted playsinline preload='metadata'></video>" : '') +
