@@ -69,7 +69,9 @@ a{color:inherit}
 .abas{display:flex;gap:0;background:#fff;border-top:1px solid var(--linha);overflow:auto}
 .abas span{padding:9px 16px;font-size:12.5px;cursor:pointer;white-space:nowrap;border-right:1px solid var(--linha);color:var(--suave)}
 .abas span.on{color:var(--texto);font-weight:600;box-shadow:inset 0 -3px 0 var(--destaque)}
-#sobre{width:320px;flex-shrink:0;background:#fff;border:1px solid var(--linha);border-radius:8px;padding:16px;font-size:13px;line-height:1.5}
+#sobre{width:320px;flex-shrink:0;background:#fff;border:1px solid var(--linha);border-radius:8px;padding:16px;font-size:13px;line-height:1.5;box-sizing:border-box;
+  position:sticky;top:64px;max-height:calc(100vh - 132px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#C8C6C4 transparent}
+/* o texto rola sozinho, ao lado do painel, sem levar a página junto */
 #sobre h3{margin:0 0 4px;font-size:15px}
 #sobre h5{margin:14px 0 6px;font-size:11px;letter-spacing:1.2px;color:var(--suave)}
 #sobre video{width:100%;border-radius:6px;margin-top:4px;background:#000}
@@ -89,7 +91,7 @@ a{color:inherit}
   body.menu #lateral{transform:none;box-shadow:0 0 30px rgba(0,0,0,.25)}
   #principal{margin-left:0;padding:64px 16px 20px}
   .area{flex-direction:column;align-items:stretch}
-  #sobre{width:100%}
+  #sobre{width:100%;position:static;max-height:none;overflow:visible}
   #topo .lnk{display:none}
   #topo .marca{white-space:nowrap}
   #topo .marca span{display:none}
@@ -177,6 +179,7 @@ a{color:inherit}
       "<h5>COMO FOI FEITO</h5><div class='tags'>" + r.tecnicas.map(function (t) { return "<span class='tag'>" + esc(t) + '</span>'; }).join('') + '</div>' +
       (r.video ? "<h5>VÍDEO</h5><video src='" + r.video + "' controls muted playsinline preload='metadata'></video>" : '') +
       "<h5>SOBRE ESTA VERSÃO</h5><span style='color:#605E5C'>Versão web do relatório feito no Power BI, com os mesmos visuais e dados. Os dados são públicos e agregados.</span>";
+    if ($('sobre').dataset.id !== r.id) { $('sobre').scrollTop = 0; $('sobre').dataset.id = r.id; }   // trocar de página mantém onde a leitura parou
     menu(r.id); encaixa(); scrollTo(0, 0);
   }
   $('abas').onclick = function (e) { var s = e.target.closest('span'); if (s && atual) location.hash = '#/r/' + atual.id + '/' + (+s.dataset.i + 1); };
