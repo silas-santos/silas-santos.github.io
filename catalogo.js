@@ -141,7 +141,7 @@ window.CATALOGO = [
     "arquivo": "relatorios/leitos/p1.html"
    }
   ],
-  "video": null,
+  "video": "videos/Leitos_ocupados_RS.mp4",
   "tecnicas": [
    "HTML Content",
    "JavaScript",
@@ -163,9 +163,9 @@ window.CATALOGO = [
    "O painel passa os meses sozinho: as janelas acendem e apagam conforme a ocupação. O botão ▶/❚❚ liga e desliga, e os botões − e + mudam o tempo por mês, de 3 segundos a 1 minuto.",
    "Passe o mouse num andar para ver a ocupação, os leitos e os dias daquele tipo de leito.",
    "Clique num prédio para os cartões de baixo mostrarem só aquela macrorregião; clique de novo para voltar ao RS.",
-   "Clique num cartão de andar para destacar aquele tipo de leito em todos os prédios. Janela só em contorno é leito que não existia no mês (por exemplo, UTI aberta só no inverno)."
+   "Clique num cartão de andar para destacar aquele tipo de leito em todos os prédios. Janela só em contorno é leito que não existia naquele mês."
   ],
-  "destaque": "A Metropolitana tem 40% dos leitos SUS do estado (8,6 mil de 21,2 mil) e é o prédio mais cheio: 76% em julho de 2026. Na pediatria, a ocupação do RS vai de 30% no verão a 50% no inverno."
+  "destaque": "A Metropolitana tem 41% dos leitos SUS do estado (8,6 mil de 21,2 mil) e é o prédio mais cheio: 76% em julho de 2026. Na pediatria, a ocupação do RS vai de 30% no verão a 50% no inverno."
  },
  {
   "id": "dengue",
