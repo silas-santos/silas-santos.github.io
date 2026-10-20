@@ -1,5 +1,42 @@
 window.CATALOGO = [
  {
+  "id": "exportacoes",
+  "workspace": "Agro",
+  "tipo": "Painel de TV",
+  "titulo": "Exportação do campo gaúcho para o mundo",
+  "resumo": "Soja, farelo, fumo, frango e arroz do RS saindo por mar, mês a mês: um mapa-múndi com os navios indo e voltando, o destino nº 1 em destaque e os cinco principais destinos.",
+  "paginas": [
+   {
+    "nome": "Painel",
+    "arquivo": "relatorios/exportacoes/p1.html"
+   }
+  ],
+  "video": "videos/Exportacoes_RS.mp4",
+  "tecnicas": [
+   "HTML Content",
+   "JavaScript",
+   "DAX que gera JSON",
+   "Animação"
+  ],
+  "fontes": [
+   "Comex Stat / MDIC",
+   "Natural Earth (mapa)"
+  ],
+  "data": "out/2026",
+  "miniatura": "miniaturas/exportacoes.jpg",
+  "explica": [
+   "Mostra para onde vão, mês a mês, as principais exportações do Rio Grande do Sul por mar: soja em grão, farelo de soja, fumo, carne de frango e arroz. Os dados são do Comex Stat (MDIC), pelo estado de origem do produto, país de destino e porto de embarque.",
+   "Cada navio representa 50 mil toneladas embarcadas, a carga de um graneleiro típico, com a cor do produto. Quando volta, o navio aparece apagado. Destinos com volume menor no mês aparecem só pela rota acesa e pelo círculo no país.",
+   "As rotas são aproximadas, por pontos de passagem reais (Cabo da Boa Esperança, Estreito de Malaca, Gibraltar). Os navios são ilustrativos, não são as viagens reais. O Comex Stat registra o município do exportador, não o da lavoura."
+  ],
+  "uso": [
+   "O painel passa os meses sozinho; o botão ▶/❚❚ liga e desliga, e os botões − e + mudam o tempo por mês, de 3 segundos a 1 minuto.",
+   "O destino nº 1 do mês fica em dourado, com pulso, rota acesa e a sua fatia; do 2º ao 5º, num dourado mais fraco, os mesmos de \"principais destinos\".",
+   "Clique na linha do tempo, embaixo, para ir direto a qualquer mês. Passe o mouse num país de destino para ver as toneladas do mês."
+  ],
+  "destaque": "De jan/2023 a set/2026 saíram 55,9 milhões de toneladas desses cinco produtos por mar, 96% pelo porto de Rio Grande. A China levou 54% (e 91% da soja em grão), e set/2026 foi o mês recorde, com 2,32 milhões de toneladas."
+ },
+ {
   "id": "estiagem",
   "workspace": "Agro",
   "tipo": "Painel de TV",
