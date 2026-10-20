@@ -3,7 +3,7 @@ window.CATALOGO = [
   "id": "estiagem",
   "workspace": "Agro",
   "tipo": "Painel de TV",
-  "titulo": "A estiagem que custou uma safra",
+  "titulo": "A chuva que decide a safra",
   "resumo": "Soja no RS safra a safra, de 2015 a 2025: produtividade de cada município × safra normal, chuva das estações do INMET e indenizações do seguro rural. Quatro estiagens em seis safras.",
   "paginas": [
    {

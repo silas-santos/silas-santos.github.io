@@ -6,7 +6,7 @@ Este site mostra a **versão web interativa** de cada projeto: os mesmos visuais
 
 | Projeto | Tipo | Tema |
 |---|---|---|
-| A estiagem que custou uma safra | Painel de TV | Agro |
+| A chuva que decide a safra | Painel de TV | Agro |
 | A cidade está preparada para os bebês? | Relatório | Saúde |
 | Como nascem os gaúchos | Relatório | Saúde |
 | Quanto dos leitos SUS está ocupado? | Painel de TV | Saúde |

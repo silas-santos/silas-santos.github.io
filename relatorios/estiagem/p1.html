@@ -1,4 +1,4 @@
-<!doctype html><html lang='pt-BR'><head><meta charset='utf-8'><title>A estiagem que custou uma safra · Painel</title><style>html,body{margin:0;background:#060806}</style></head><body><div id='st'>
+<!doctype html><html lang='pt-BR'><head><meta charset='utf-8'><title>A chuva que decide a safra · Painel</title><style>html,body{margin:0;background:#060806}</style></head><body><div id='st'>
 <style>
 #st{position:relative;width:1280px;height:720px;overflow:hidden;background:#10140F;color:#ECE7DA;font-family:'Segoe UI',system-ui,sans-serif;line-height:1.2;transform-origin:0 0}
 #st *{box-sizing:border-box}
@@ -6,6 +6,7 @@
 #st .kick{left:32px;top:22px;font-size:11px;letter-spacing:2.4px;color:#9FA58F;font-weight:700}
 #st .tit{left:32px;top:38px;font-size:30px;font-weight:700;letter-spacing:-.3px;color:#F4EFE2}
 #st .tit b{color:#E3B448}
+#st .sub{left:32px;top:76px;font-size:12px;color:#9FA58F;letter-spacing:.2px}
 #st .safra{left:36px;top:440px;z-index:2;font-size:84px;font-weight:800;letter-spacing:-3px;color:#F4EFE2;line-height:84px;transition:color .6s}
 #st .safra small{display:block;font-size:13px;letter-spacing:2px;font-weight:700;color:#9FA58F;margin-top:6px}
 #st .chips{left:32px;top:672px;display:flex;gap:4px}
@@ -21,9 +22,9 @@
 #st .legt{left:36px;top:616px;font-size:10px;letter-spacing:1.6px;color:#9FA58F;font-weight:700}
 #st .col{left:772px;top:100px;width:476px}
 #st .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#st .k{background:#171C15;border:1px solid #262D22;border-radius:10px;padding:9px 14px;height:72px}
+#st .k{background:#171C15;border:1px solid #262D22;border-radius:10px;padding:9px 14px;height:78px}
 #st .k .l{font-size:10px;letter-spacing:1.6px;color:#9FA58F;font-weight:700}
-#st .k .v{font-size:26px;font-weight:700;margin-top:4px;color:#F4EFE2;line-height:30px;white-space:nowrap}
+#st .k .v{font-size:26px;font-weight:700;margin-top:4px;color:#F4EFE2;line-height:28px;white-space:nowrap}
 #st .k .v.r{color:#EF7B4F}
 #st .k .v.g{color:#9CCB74}
 #st .k .v.a{color:#7FB8E6}
@@ -43,8 +44,9 @@
 #st #tempo{min-width:44px;text-align:center;font-size:12.5px;font-weight:700;color:#ECE7DA}
 </style>
 <div class='ab faixa' id='fx'></div>
-<div class='ab kick'>SOJA NO RIO GRANDE DO SUL · SAFRA A SAFRA · 2015 A 2025</div>
-<div class='ab tit'>A estiagem que <b>custou</b> uma safra</div>
+<div class='ab kick' id='kk'>SOJA NO RIO GRANDE DO SUL · SAFRA A SAFRA</div>
+<div class='ab tit'>A chuva que <b>decide</b> a safra</div>
+<div class='ab sub'>Produtividade de cada município × safra normal · chuva do INMET · seguro rural</div>
 <div class='ab ctl'><span class='l'>TEMPO POR SAFRA</span><span class='stp' id='menos' title='trocar mais rápido'>−</span><span id='tempo'></span><span class='stp' id='mais' title='trocar mais devagar'>+</span></div>
 <div class='ab safra' id='sf'></div>
 <svg class='ab' id='mp' style='left:80px;top:96px' width='672' height='493' viewBox='0 0 600 440'></svg>
@@ -68,7 +70,10 @@
   var br = function (v, d) { return v.toFixed(d || 0).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
   var CORES = [[-0.6, '#9E2A1F'], [-0.4, '#C9472A'], [-0.2, '#E07A45'], [-0.07, '#C9A46A'], [0.07, '#4A5340'], [0.2, '#6E9A4E'], [9, '#9CCB74']];
   function cor(v) { for (var i = 0; i < CORES.length; i++) if (v < CORES[i][0]) return CORES[i][1]; return CORES[CORES.length - 1][1]; }
-  var SECAS = { '2020': 1, '2022': 1, '2023': 1, '2025': 1 };
+  // estiagem = chuva de novembro a março abaixo de 80% do normal (mediana das estações): vale para as safras que entrarem
+  var SECAS = {}; D.rs.forEach(function (r) { if (r.chuva != null && r.chuva < 0.8) SECAS[r.safra] = 1; });
+  // o período sai dos dados: entra safra nova, o texto acompanha
+  $('kk').textContent = 'SOJA NO RIO GRANDE DO SUL · SAFRA A SAFRA · ' + D.safras[0] + ' A ' + D.safras[D.safras.length - 1];
 
   // mapa: municípios + estações do INMET
   var mp = $('mp'), paths = {}, bol = {};
