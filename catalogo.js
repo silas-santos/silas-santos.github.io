@@ -133,8 +133,8 @@ window.CATALOGO = [
   "id": "leitos",
   "workspace": "Saúde",
   "tipo": "Painel de TV",
-  "titulo": "Leitos SUS × Internações",
-  "resumo": "Onde o sistema aperta: leitos SUS (CNES) e dias de internação (SIH) por macrorregião de saúde, mês a mês, com a ocupação estimada.",
+  "titulo": "Quanto dos leitos SUS está ocupado?",
+  "resumo": "Os leitos SUS do RS como prédios: cada macrorregião de saúde é um hospital, cada andar um tipo de leito (UTI, clínico, cirúrgico, pediátrico, obstétrico) e cada janela acesa, 20 leitos ocupados, mês a mês.",
   "paginas": [
    {
     "nome": "Painel",
@@ -145,7 +145,8 @@ window.CATALOGO = [
   "tecnicas": [
    "HTML Content",
    "JavaScript",
-   "DAX que gera JSON"
+   "DAX que gera JSON",
+   "Microdados SIH"
   ],
   "fontes": [
    "DATASUS · CNES (leitos)",
@@ -154,15 +155,17 @@ window.CATALOGO = [
   "data": "out/2026",
   "miniatura": "miniaturas/leitos.jpg",
   "explica": [
-   "Mostra onde o sistema hospitalar do SUS aperta. Junta os leitos SUS de cada macrorregião de saúde (CNES, incluindo os complementares, como UTI) com os dias de internação do SIH para estimar a ocupação mês a mês.",
-   "Ocupação estimada = dias de internação no mês ÷ (leitos SUS × dias do mês). É uma aproximação, porque o SIH registra a internação no mês em que ela é processada."
+   "Mostra quanto dos leitos SUS do Rio Grande do Sul está ocupado, mês a mês. Cada macrorregião de saúde vira um prédio: a altura é o número de leitos, cada andar é um tipo de leito (de baixo para cima: clínico, cirúrgico, pediátrico, obstétrico, outras especialidades e UTI no topo), e cada janela acesa são 20 leitos ocupados.",
+   "Os leitos vêm do CNES, mês a mês. Os dias de internação vêm dos microdados do SIH, agregados pela especialidade do leito, com os dias de UTI separados. Nenhum registro individual é gravado.",
+   "Ocupação estimada = dias de internação no mês ÷ (leitos SUS × dias do mês). É uma aproximação, porque o SIH registra a internação inteira no mês em que ela é processada. Por isso internações longas (psiquiatria, crônicos) podem passar de 100% no andar \"outras\". Hospital-dia, isolamento e cuidados intermediários ficam de fora."
   ],
   "uso": [
-   "O painel passa os meses sozinho; o botão ▶/❚❚ liga e desliga e os botões − e + mudam o tempo por mês.",
-   "Clique numa macrorregião no mapa ou num medidor para abrir o detalhe: ocupação, leitos, internações, permanência média e tipos de leito.",
-   "Clique num mês na barra ou na linha do tempo para fixar o período. O inverno (junho a agosto) aparece sombreado."
+   "O painel passa os meses sozinho: as janelas acendem e apagam conforme a ocupação. O botão ▶/❚❚ liga e desliga, e os botões − e + mudam o tempo por mês, de 3 segundos a 1 minuto.",
+   "Passe o mouse num andar para ver a ocupação, os leitos e os dias daquele tipo de leito.",
+   "Clique num prédio para os cartões de baixo mostrarem só aquela macrorregião; clique de novo para voltar ao RS.",
+   "Clique num cartão de andar para destacar aquele tipo de leito em todos os prédios. Janela só em contorno é leito que não existia no mês (por exemplo, UTI aberta só no inverno)."
   ],
-  "destaque": "Os medidores ordenam as 7 macrorregiões pela ocupação do último mês, e a linha deixa comparar o inverno com o resto do ano em cada uma."
+  "destaque": "A Metropolitana tem 40% dos leitos SUS do estado (8,6 mil de 21,2 mil) e é o prédio mais cheio: 76% em julho de 2026. Na pediatria, a ocupação do RS vai de 30% no verão a 50% no inverno."
  },
  {
   "id": "dengue",

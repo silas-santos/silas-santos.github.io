@@ -9,7 +9,7 @@ Este site mostra a **versão web interativa** de cada projeto: os mesmos visuais
 | A estiagem que custou uma safra | Painel de TV | Agro |
 | A cidade está preparada para os bebês? | Relatório | Saúde |
 | Como nascem os gaúchos | Relatório | Saúde |
-| Leitos SUS × Internações | Painel de TV | Saúde |
+| Quanto dos leitos SUS está ocupado? | Painel de TV | Saúde |
 | Dengue no RS | Painel de TV | Saúde |
 | Panorama das Internações SUS RS | Painel de TV | Saúde |
 | Clínica odontológica (dados fictícios) | Painel de TV | Exemplo |
