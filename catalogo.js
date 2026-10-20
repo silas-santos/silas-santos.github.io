@@ -11,7 +11,7 @@ window.CATALOGO = [
     "arquivo": "relatorios/estiagem/p1.html"
    }
   ],
-  "video": null,
+  "video": "videos/Estiagem_RS.mp4",
   "tecnicas": [
    "HTML Content",
    "JavaScript",
@@ -56,7 +56,7 @@ window.CATALOGO = [
     "arquivo": "relatorios/bebes/p3.html"
    }
   ],
-  "video": null,
+  "video": "videos/A_cidade_esta_preparada_para_os_bebes.mp4",
   "tecnicas": [
    "Deneb (Vega)",
    "Drill-through",
