@@ -35,11 +35,16 @@ html,body{margin:0;padding:0;overflow:hidden;background:#050D16}
 .stp:hover{background:#F2B544;color:#050D16}
 .stp.off{opacity:.3;pointer-events:none}
 #tempo{min-width:40px;text-align:center;font-size:12.5px;font-weight:700}
-#play{width:26px;height:26px;border-radius:13px;border:1px solid #2B4258;background:#0C1A27;color:#F2B544;font-size:11px;text-align:center;line-height:25px;cursor:pointer;margin-left:4px}
+#play{position:absolute;left:1px;top:1px;width:26px;height:26px;box-sizing:border-box;border-radius:13px;border:1px solid #2B4258;background:#0C1A27;color:#F2B544;font-size:11px;text-align:center;line-height:24px;cursor:pointer}
 #play.on{background:#F2B544;color:#050D16}
 .col{left:1036px;top:92px;width:216px}
 .mes{font-size:42px;font-weight:800;letter-spacing:-1.5px;line-height:44px}
 .mes small{display:block;font-size:11px;letter-spacing:2px;color:#7F96AA;font-weight:700;margin-top:2px}
+#pw{position:relative;display:inline-block;width:28px;height:28px;margin-left:4px}
+.anel{position:absolute;left:-3px;top:-3px;pointer-events:none;transform:rotate(-90deg)}
+.anel circle{fill:none;stroke:#FFE7B0;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:94.2;stroke-dashoffset:94.2}
+.anel.on circle{animation:cont var(--t,4s) linear infinite}
+@keyframes cont{from{stroke-dashoffset:94.2}to{stroke-dashoffset:0}}
 .k{margin-top:9px;background:rgba(12,26,39,.86);border:1px solid #1C3247;border-radius:10px;padding:7px 12px}
 .k .l{font-size:9.5px;letter-spacing:1.6px;color:#7F96AA;font-weight:700}
 .k .v{font-size:21px;font-weight:700;line-height:26px;white-space:nowrap}
@@ -63,7 +68,7 @@ html,body{margin:0;padding:0;overflow:hidden;background:#050D16}
   <div class='ab kick' id='kk'>EXPORTAÇÕES DO RIO GRANDE DO SUL · MÊS A MÊS</div>
   <div class='ab tit'>Exportação do campo gaúcho para o <b>mundo</b></div>
   <div class='ab sub' id='sb'></div>
-  <div class='ab ctl'><span class='l'>TEMPO POR MÊS</span><span class='stp' id='menos'>−</span><span id='tempo'></span><span class='stp' id='mais'>+</span><span id='play' class='on'>❚❚</span></div>
+  <div class='ab ctl'><span class='l'>TEMPO POR MÊS</span><span class='stp' id='menos'>−</span><span id='tempo'></span><span class='stp' id='mais'>+</span><span id='pw'><svg class='anel' id='anel' width='34' height='34'><circle cx='17' cy='17' r='15'/></svg><span id='play' class='on'>❚❚</span></span></div>
   <div class='ab col' id='col'></div>
   <div class='ab leg' id='leg'></div>
   <div class='ab linha' id='lin'></div>
@@ -230,7 +235,11 @@ var D = {"meses":["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2
     solta(i);
     reinicia();
   }
-  function reinicia() { clearInterval(timer); if (tocando) timer = setInterval(function () { var j = (sel + 1) % N; vai(j, j !== 0); }, msVideo || PASSO); }
+  function reinicia() { clearInterval(timer); if (tocando) timer = setInterval(function () { var j = (sel + 1) % N; vai(j, j !== 0); }, msVideo || PASSO); anelMes(); }
+  function anelMes() {   // anel em volta do pause: dá uma volta no tempo escolhido por mês e recomeça junto com o mês seguinte
+    var a = $('anel'); a.style.setProperty('--t', (msVideo || PASSO) + 'ms');
+    a.classList.remove('on'); void a.getBoundingClientRect(); if (tocando) a.classList.add('on');
+  }
   var TEMPOS = [3, 4, 5, 10, 15, 20, 30, 45, 60], ti = 1;
   function tempo(k) {
     ti = Math.max(0, Math.min(TEMPOS.length - 1, k)); PASSO = TEMPOS[ti] * 1000;
