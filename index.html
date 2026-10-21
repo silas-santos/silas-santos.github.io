@@ -43,6 +43,8 @@ a{color:inherit}
 .filtros span{padding:5px 12px;border-radius:14px;border:1px solid var(--linha);background:#fff;font-size:12.5px;cursor:pointer;user-select:none}
 .filtros span.on{background:var(--barra);color:#fff;border-color:var(--barra)}
 .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.sobremim{grid-column:1/-1;max-width:780px;background:var(--card);border:1px solid var(--linha);border-radius:10px;padding:26px 30px;font-size:15px;line-height:1.7}
+.sobremim p{margin:0 0 14px}.sobremim p:last-child{margin:0;color:var(--suave)}
 .card{background:var(--card);border:1px solid var(--linha);border-radius:10px;overflow:hidden;cursor:pointer;transition:box-shadow .2s, transform .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
 .card:hover{box-shadow:0 6px 22px rgba(0,0,0,.12);transform:translateY(-2px)}
 .card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#ddd;border-bottom:1px solid var(--linha)}
@@ -111,7 +113,7 @@ a{color:inherit}
   <section id="galeria">
     <div class="intro">
       <div><h1 id="titGaleria">Relatórios e painéis</h1>
-      <p id="txtGaleria">Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.</p></div>
+      <p id="txtGaleria">Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.</p></div>
       <div class="filtros" id="filtros"></div>
     </div>
     <div class="grade" id="grade"></div>
@@ -127,6 +129,16 @@ a{color:inherit}
 </main>
 <script src="catalogo.js"></script>
 <script>
+// texto da página "Sobre mim" (um item por parágrafo)
+var SOBRE = [
+  'Sou Silas Santos, de Ijuí (RS). Sou analista de BI na área da saúde desde 2022 e, desde 2024, professor do curso Técnico em Desenvolvimento de Sistemas.',
+  'Gosto de transformar dados em respostas que alguém consegue usar no dia seguinte. No trabalho, faço isso para equipes assistenciais, áreas administrativas e diretoria, em temas como oncologia, UTI neonatal, centro obstétrico, centro cirúrgico, laboratório, faturamento e qualidade. Cuido de todas as etapas: a consulta SQL, a modelagem no Power BI, os painéis de TV que rodam o dia inteiro e a documentação que entrego às coordenações.',
+  'Nos últimos anos venho juntando BI, automação e IA. Uso n8n, PostgreSQL e modelos de IA rodando localmente, na própria máquina, para que os dados dos pacientes não saiam da instituição. Foi assim que nasceram um checklist de prontuários avaliado por IA, o acompanhamento dos protocolos de Sepse, AVC, Dor Torácica e Pneumonia e um protótipo de assistente de agendamento oncológico, em que as regras escolhem as datas e a IA só conversa e explica a proposta. Gosto de IA assim: útil, previsível e fácil de conferir.',
+  'Cheguei aos dados pela infraestrutura: foram cinco anos em suporte e sistemas, com Active Directory, Office 365, rede e ERP. Essa base me ajuda até hoje com gateway, servidores e integrações e, principalmente, me ensinou a ouvir quem usa o sistema no dia a dia.',
+  'Em sala de aula e nos painéis, procuro a mesma coisa: explicar de um jeito simples o que os dados mostram, sem esconder o que eles não mostram.',
+  'Sou tecnólogo em Sistemas para Internet pelo IF Farroupilha, com pós-graduação em Ciência de Dados e Inteligência Artificial e em Análise de Dados.',
+  'Os painéis deste site usam apenas dados públicos do Rio Grande do Sul (DATASUS, INEP, SICONFI, IBGE, INMET, MAPA e Comex Stat), além de um exemplo com dados fictícios. Os relatórios que faço no trabalho ficam lá dentro. Aqui está o mesmo jeito de trabalhar, aplicado a perguntas que qualquer pessoa pode conferir.'
+];
 (function () {
   var C = window.CATALOGO, $ = function (id) { return document.getElementById(id); };
   var WS = [['Saúde', '✚'], ['Agro', '❀'], ['Exemplos', '◇']];
@@ -199,12 +211,14 @@ a{color:inherit}
     if (h[0] === 'sobre') {
       $('galeria').style.display = 'block'; $('visor').style.display = 'none'; menu('');
       $('titGaleria').textContent = 'Sobre mim';
-      $('txtGaleria').innerHTML = 'Analista de BI e professor do curso Técnico em Desenvolvimento de Sistemas. <em>(texto a definir)</em>';
-      $('filtros').innerHTML = ''; $('grade').innerHTML = ''; return;
+      $('txtGaleria').textContent = 'Analista de BI e professor do curso Técnico em Desenvolvimento de Sistemas.';
+      $('filtros').innerHTML = '';
+      $('grade').innerHTML = "<div class='sobremim'>" + SOBRE.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>';
+      return;
     }
     filtroWs = h[0] === 'ws' ? decodeURIComponent(h[1] || '') : '';
     $('galeria').style.display = 'block'; $('visor').style.display = 'none';
-    $('txtGaleria').textContent = 'Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.';
+    $('txtGaleria').textContent = 'Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.';
     menu(filtroWs || 'inicio'); galeria();
   }
   addEventListener('hashchange', rota);
