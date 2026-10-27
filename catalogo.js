@@ -1,5 +1,42 @@
 window.CATALOGO = [
  {
+  "id": "petroleo",
+  "workspace": "Energia",
+  "tipo": "Painel de TV",
+  "titulo": "O petróleo que vem de baixo do sal",
+  "resumo": "O mar do Brasil em corte, ano a ano desde 2008: as plataformas que já foram a nº 1 brilhando com a produção, os poços descendo até o pré-sal, a fatia de cada bacia e a virada de Campos para Santos.",
+  "paginas": [
+   {
+    "nome": "Painel",
+    "arquivo": "relatorios/petroleo/p1.html"
+   }
+  ],
+  "video": "videos/Petroleo_no_Mar.mp4",
+  "tecnicas": [
+   "HTML Content",
+   "JavaScript",
+   "DAX que gera JSON",
+   "Ilustração animada"
+  ],
+  "fontes": [
+   "ANP · produção por poço",
+   "ANP · produção por zona (pré-sal)"
+  ],
+  "data": "out/2026",
+  "miniatura": "miniaturas/petroleo.jpg",
+  "explica": [
+   "Mostra de onde sai o petróleo do mar brasileiro, ano a ano desde 2008, com os dados abertos da ANP: a produção de cada poço, mês a mês, somada por plataforma, bacia e camada (pré-sal ou pós-sal). Petróleo aqui é óleo mais condensado.",
+   "As plataformas desenhadas são as que já foram a nº 1 do mar em algum ano. Elas brilham conforme a produção, e o fluxo nos poços sobe mais rápido quanto mais produzem. Os cartões somam todas as plataformas, não só as desenhadas.",
+   "O pré-sal segue a própria ANP: a lista de poços do pré-sal (2014 a 2023) e a produção por zona (Barra Velha, Itapema, Macabu e Coqueiros) de 2024 em diante. O desenho é ilustrativo, com profundidades e posições fora de escala."
+  ],
+  "uso": [
+   "O painel passa os anos sozinho; o botão ▶/❚❚ liga e desliga, e os botões − e + mudam o tempo por ano, de 3 segundos a 1 minuto. O anel em volta do pause mostra quanto falta para o próximo ano.",
+   "Clique na linha do tempo, embaixo, para ir direto a qualquer ano. A parte dourada de cada barra é o pré-sal.",
+   "O último ano é parcial: os cartões dizem até que mês vão os dados."
+  ],
+  "destaque": "Em 2008, 95% do petróleo do mar saía da Bacia de Campos, quase todo de cima da camada de sal. O pré-sal passou da metade em 2017, Santos passou Campos em 2018, e em 2026 (jan a ago) o pré-sal já é 84% de 4,23 milhões de barris por dia."
+ },
+ {
   "id": "exportacoes",
   "workspace": "Agro",
   "tipo": "Painel de TV",

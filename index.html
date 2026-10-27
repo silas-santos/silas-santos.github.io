@@ -113,7 +113,7 @@ a{color:inherit}
   <section id="galeria">
     <div class="intro">
       <div><h1 id="titGaleria">Relatórios e painéis</h1>
-      <p id="txtGaleria">Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.</p></div>
+      <p id="txtGaleria">Projetos em Power BI com dados públicos: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat) no Rio Grande do Sul, e energia (ANP) no Brasil. Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.</p></div>
       <div class="filtros" id="filtros"></div>
     </div>
     <div class="grade" id="grade"></div>
@@ -137,11 +137,11 @@ var SOBRE = [
   'Cheguei aos dados pela infraestrutura: foram cinco anos em suporte e sistemas, com Active Directory, Office 365, rede e ERP. Essa base me ajuda até hoje com gateway, servidores e integrações e, principalmente, me ensinou a ouvir quem usa o sistema no dia a dia.',
   'Em sala de aula e nos painéis, procuro a mesma coisa: explicar de um jeito simples o que os dados mostram, sem esconder o que eles não mostram.',
   'Sou tecnólogo em Sistemas para Internet pelo IF Farroupilha, com pós-graduação em Ciência de Dados e Inteligência Artificial e em Análise de Dados.',
-  'Os painéis deste site usam apenas dados públicos do Rio Grande do Sul (DATASUS, INEP, SICONFI, IBGE, INMET, MAPA e Comex Stat), além de um exemplo com dados fictícios. Os relatórios que faço no trabalho ficam lá dentro. Aqui está o mesmo jeito de trabalhar, aplicado a perguntas que qualquer pessoa pode conferir.'
+  'Os painéis deste site usam apenas dados públicos: do Rio Grande do Sul (DATASUS, INEP, SICONFI, IBGE, INMET, MAPA e Comex Stat) e, na energia, da ANP, além de um exemplo com dados fictícios. Os relatórios que faço no trabalho ficam lá dentro. Aqui está o mesmo jeito de trabalhar, aplicado a perguntas que qualquer pessoa pode conferir.'
 ];
 (function () {
   var C = window.CATALOGO, $ = function (id) { return document.getElementById(id); };
-  var WS = [['Saúde', '✚'], ['Agro', '❀'], ['Exemplos', '◇']];
+  var WS = [['Saúde', '✚'], ['Agro', '❀'], ['Energia', '◆'], ['Exemplos', '◇']];
   var filtroWs = '', termo = '';
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
@@ -218,7 +218,7 @@ var SOBRE = [
     }
     filtroWs = h[0] === 'ws' ? decodeURIComponent(h[1] || '') : '';
     $('galeria').style.display = 'block'; $('visor').style.display = 'none';
-    $('txtGaleria').textContent = 'Projetos em Power BI com dados públicos do Rio Grande do Sul: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat). Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.';
+    $('txtGaleria').textContent = 'Projetos em Power BI com dados públicos: saúde (DATASUS, INEP, SICONFI) e agro (IBGE, INMET, MAPA, Comex Stat) no Rio Grande do Sul, e energia (ANP) no Brasil. Cada um abre aqui mesmo, interativo, na versão web do que está no Power BI.';
     menu(filtroWs || 'inicio'); galeria();
   }
   addEventListener('hashchange', rota);
